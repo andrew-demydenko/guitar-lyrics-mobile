@@ -32,7 +32,7 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
     scrollIntervalRef.current = setInterval(() => {
       currentScroll = Math.min(
         currentScroll + 0.5 * speedMultiplier,
-        maxScroll,
+        maxScroll
       );
       scrollY.setValue(currentScroll);
 
@@ -138,7 +138,7 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: true },
+          { useNativeDriver: true }
         )}
       >
         <View className="p-2">

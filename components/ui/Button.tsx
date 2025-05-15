@@ -45,7 +45,7 @@ export const Button: React.FC<ButtonProps> = ({
           variantClasses[variant],
           sizeClasses[size],
           !isActive && "opacity-60",
-          className,
+          className
         )
       }
     >

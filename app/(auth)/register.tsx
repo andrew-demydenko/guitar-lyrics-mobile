@@ -23,7 +23,7 @@ export default function Register() {
       const axiosError = error as AxiosError;
       Alert.alert(
         "Ошибка",
-        axiosError.response?.statusText || "Ошибка регистрации",
+        axiosError.response?.statusText || "Ошибка регистрации"
       );
     } finally {
       setLoading(false);

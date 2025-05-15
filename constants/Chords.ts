@@ -213,5 +213,5 @@ export const GROUPED_CHORDS: ChordGroup = {
 };
 
 export const CHORDS: string[] = Array.from(
-  new Set(Object.values(GROUPED_CHORDS).flat()),
+  new Set(Object.values(GROUPED_CHORDS).flat())
 );

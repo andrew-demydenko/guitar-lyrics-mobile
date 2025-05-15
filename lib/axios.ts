@@ -30,7 +30,7 @@ api.interceptors.response.use(
 
       try {
         const result = await api.post<null, RefreshTokenResponse>(
-          `${API_URL}/auth/refresh-token`,
+          `${API_URL}/auth/refresh-token`
         );
         await setAccessToken(result.accessToken);
 
@@ -43,7 +43,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 
 export default api;

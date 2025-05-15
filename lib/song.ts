@@ -2,7 +2,7 @@ import { GROUPED_CHORDS } from "@/constants/Chords";
 import { ChordPositions, ChordPosition } from "@/entities/song";
 
 const getChordIndex = (
-  chord: string,
+  chord: string
 ): { group: string[]; index: number } | null => {
   for (const group of Object.values(GROUPED_CHORDS)) {
     const index = group.indexOf(chord);

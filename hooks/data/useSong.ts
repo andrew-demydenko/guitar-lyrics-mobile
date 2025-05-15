@@ -14,7 +14,7 @@ import { Song } from "@/entities/song";
 
 export const useSongById = (
   id: string,
-  options?: UseQueryOptions<Song | null>,
+  options?: UseQueryOptions<Song | null>
 ) => {
   return useQuery<Song | null, Error>({
     queryKey: ["song", id],
@@ -27,7 +27,7 @@ export const useSongById = (
 
 export const useSongs = (
   userId?: string,
-  options?: UseQueryOptions<Song[]>,
+  options?: UseQueryOptions<Song[]>
 ) => {
   return useQuery<Song[], Error>({
     queryKey: userId ? ["songs", userId] : ["songs"],
@@ -39,7 +39,7 @@ export const useSongs = (
 };
 
 export const useSongDelete = (
-  options: UseMutationOptions<Song, Error, string>,
+  options: UseMutationOptions<Song, Error, string>
 ) => {
   return useMutation({
     mutationFn: (id: string) => {
