@@ -1,8 +1,9 @@
 @tailwind base;
 @tailwind utilities;
 
-html, body {
-  font-family: 'Helvetica', sans-serif;
+html,
+body {
+  font-family: "Helvetica", sans-serif;
   background-color: #f0f0f0;
   font-size: 16px;
   line-height: 1.5;

@@ -11,10 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "LSApplicationQueriesSchemes": [
-          "googlechromes",
-          "googlechromes"
-        ]
+        "LSApplicationQueriesSchemes": ["googlechromes", "googlechromes"]
       },
       "bundleIdentifier": "com.huxley1991.guitar-lyrics"
     },
