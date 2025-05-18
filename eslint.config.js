@@ -1,4 +1,3 @@
-// https://docs.expo.dev/guides/using-eslint/
 const js = require("@eslint/js");
 const { defineConfig } = require("eslint/config");
 const expoConfig = require("eslint-config-expo/flat");
@@ -13,14 +12,14 @@ module.exports = defineConfig([
         "error",
         {
           groups: [
-            "builtin", // node:fs, path
-            "external", // react, expo-font, etc.
-            "internal", // алиасы типа @/ или src/
-            "parent", // ../
-            "sibling", // ./
-            "index", // './index'
-            "object", // импорт из объектов (редко используется)
-            "type", // только типы (TypeScript)
+            "builtin", // Встроенные модули (node:fs)
+            "external", // Внешние зависимости (react, expo)
+            "internal", // Абсолютные пути (@/, src/)
+            "parent", // Родительские каталоги (../)
+            "sibling", // Текущий каталог (./)
+            "index", // Индексные файлы (./index)
+            "object", // Импорты типов (type, interface)
+            "type", // TypeScript типы
           ],
           pathGroups: [
             {
@@ -33,11 +32,13 @@ module.exports = defineConfig([
             },
           ],
           pathGroupsExcludedImportTypes: ["builtin"],
-          "newlines-between": "never",
           alphabetize: {
             order: "asc",
             caseInsensitive: true,
           },
+
+          "newlines-between": "never",
+          warnOnUnassignedImports: true,
         },
       ],
     },

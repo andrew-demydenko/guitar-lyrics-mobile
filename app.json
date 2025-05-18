@@ -9,7 +9,14 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "googlechromes",
+          "googlechromes"
+        ]
+      },
+      "bundleIdentifier": "com.huxley1991.guitar-lyrics"
     },
     "android": {
       "adaptiveIcon": {

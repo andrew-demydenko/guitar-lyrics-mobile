@@ -1,23 +1,43 @@
-import React from "react";
+import { useRouter, Href } from "expo-router";
+import React, { useState, useCallback } from "react";
 import { Pressable, Text, PressableProps } from "react-native";
 import { style } from "twrnc";
 
 interface ButtonProps extends PressableProps {
   children: React.ReactNode;
   className?: string;
+  disabled?: boolean;
   isActive?: boolean;
   size?: "sm" | "md" | "lg";
   variant?: "primary" | "secondary" | "outline" | "danger" | "success";
+  href?: Href;
+  type?: "button" | "submit" | "reset";
+  form?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   children,
   className = "",
-  isActive = true,
+  isActive = false,
+  disabled = false,
   size = "md",
   variant = "primary",
+  onPress,
+  href,
   ...rest
 }) => {
+  const [pressed, setPressed] = useState(false);
+  const router = useRouter();
+
+  const handlePressOut = useCallback(() => {
+    setPressed(false);
+  }, []);
+
+  const handlePressIn = useCallback(() => {
+    if (isActive) return;
+    setPressed(true);
+  }, [isActive]);
+
   const sizeClasses = {
     sm: "py-2 px-3 rounded-md",
     md: "py-3 px-4 rounded-lg",
@@ -36,18 +56,24 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <Pressable
+      disabled={isActive || disabled}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      style={style(
+        "flex-row items-center justify-center",
+        variantClasses[variant],
+        sizeClasses[size],
+        pressed ? "opacity-20" : "",
+        isActive ? "opacity-75" : "",
+        disabled ? "bg-gray-400 opacity-80" : "",
+        className,
+        {
+          transitionProperty: "background-color, opacity",
+          transitionDuration: "200ms",
+        }
+      )}
+      onPress={href ? () => router.push(href) : onPress}
       {...rest}
-      disabled={!isActive}
-      style={({ pressed }) =>
-        style(
-          "flex-row items-center justify-center transition-all duration-100",
-          pressed ? "scale-95" : "",
-          variantClasses[variant],
-          sizeClasses[size],
-          !isActive && "opacity-60",
-          className
-        )
-      }
     >
       <Text style={style(`${textColor} font-semibold text-center`)}>
         {children}

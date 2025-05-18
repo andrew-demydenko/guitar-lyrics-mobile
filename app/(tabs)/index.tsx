@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/Button";
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDE", dark: "#2D3D47" }}
+      // headerBackgroundColor={{ light: "#A1CEDE", dark: "#2D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/partial-react-logo.png")}
@@ -22,6 +22,8 @@ export default function HomeScreen() {
         <ThemedText type="title">Welcomeeee!</ThemedText>
         <HelloWave />
       </ThemedView>
+
+      <Button href="./modals/create-song">Создать песню</Button>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
@@ -68,7 +70,7 @@ export default function HomeScreen() {
         <Button size="md" variant="secondary" onPress={() => {}}>
           test 1
         </Button>
-        <Button size="lg" variant="success" isActive={true} onPress={() => {}}>
+        <Button size="lg" variant="success" isActive={false} onPress={() => {}}>
           test 2
         </Button>
         <Button size="sm" variant="outline" isActive={true} onPress={() => {}}>

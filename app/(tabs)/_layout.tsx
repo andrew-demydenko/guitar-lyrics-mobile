@@ -1,14 +1,15 @@
 import { Tabs } from "expo-router";
+import { useColorScheme } from "nativewind";
 import React from "react";
 import { Platform } from "react-native";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
-import { useTheme } from "@/providers/ThemeProvider";
 
 export default function TabLayout() {
-  const { theme } = useTheme();
+  const { colorScheme } = useColorScheme();
+  const theme = colorScheme || "light";
 
   return (
     <Tabs
@@ -24,6 +25,7 @@ export default function TabLayout() {
           },
           default: {},
         }),
+        animation: "shift",
       }}
     >
       <Tabs.Screen

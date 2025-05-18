@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useRouter, usePathname } from "expo-router";
 import React, {
   createContext,
   useContext,
@@ -6,6 +6,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { Platform } from "react-native";
 import { getCurrentUser } from "@/api/user";
 import { User } from "@/entities/user";
 import { clearAuthData } from "@/lib/auth";
@@ -36,10 +37,14 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { pathname } = window.location;
+      if (Platform.OS === "ios") {
+        setUser({ name: "test", email: "huxley1991@gmail.com", id: "1" });
+        return;
+      }
       const isAuth = isAuthPage(pathname);
 
       try {
@@ -48,8 +53,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (isAuth) {
           router.replace("/");
         }
-      } catch (error) {
-        console.error("Failed to fetch user data", error);
+      } catch (e) {
+        console.info("Failed to fetch user data", e);
         clearAuthData();
         if (!isAuth) {
           router.replace("/login");
@@ -58,7 +63,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     checkAuth();
-  }, [router]);
+  }, [router, pathname]);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

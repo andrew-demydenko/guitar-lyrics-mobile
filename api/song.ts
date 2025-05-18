@@ -33,5 +33,13 @@ export const getSongById = async (id: string): Promise<Song | null> => {
   }
 };
 
+export const modifySong = async (
+  id: string,
+  requestData: Song & { userId?: string }
+) => await request.patch<null, Song>(`/songs/${id}`, requestData);
+
+export const createSong = async (requestData: Song) =>
+  await request.post<null, Song>(`/songs`, requestData);
+
 export const deleteSong = async (id: string) =>
   await request.delete<null, Song>(`/songs/${id}`);
