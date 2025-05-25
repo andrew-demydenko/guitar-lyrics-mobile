@@ -1,13 +1,11 @@
 import { Stack } from "expo-router";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View, Platform } from "react-native";
 import { SongForm, defaultValues, IFormInputs } from "@/components/SongForm";
 import { Button } from "@/components/ui/Button";
 
 export default function ModalScreen() {
-  const insets = useSafeAreaInsets();
   const methods = useForm<IFormInputs>({
     defaultValues,
   });
@@ -20,7 +18,11 @@ export default function ModalScreen() {
           title: "Новая песня",
           headerRight: () => (
             <Button
-              className="m-4"
+              className={Platform.select({
+                ios: "mr-0",
+                default: "mr-4",
+              })}
+              size="sm"
               onPress={() => {
                 if (formRef.current) {
                   formRef.current.handleSubmit();
@@ -31,15 +33,12 @@ export default function ModalScreen() {
                 methods.formState.isSubmitted && !methods.formState.isValid
               }
             >
-              Save song
+              Save
             </Button>
           ),
         }}
       />
-      <View
-        style={{ marginTop: insets.top }}
-        className="flex-1 bg-white dark:bg-black p-4 shadow-md"
-      >
+      <View className="flex-1 bg-white dark:bg-black p-4 shadow-md">
         <FormProvider {...methods}>
           <SongForm ref={formRef} />
         </FormProvider>

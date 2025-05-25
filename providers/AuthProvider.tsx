@@ -18,6 +18,7 @@ const isAuthPage = (pathname: string) => {
 interface AuthContextType {
   user: User | null;
   setUser: (user: User | null) => void;
+  signOut: () => void;
 }
 
 interface AuthProviderProps {
@@ -26,10 +27,10 @@ interface AuthProviderProps {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
+export const useAuthProvider = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuthProvider must be used within an AuthProvider");
   }
   return context;
 };
@@ -38,6 +39,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
   const pathname = usePathname();
+
+  const signOut = () => {
+    setUser(null);
+    clearAuthData();
+    router.replace("/login");
+  };
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -66,7 +73,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [router, pathname]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, signOut }}>
       {children}
     </AuthContext.Provider>
   );

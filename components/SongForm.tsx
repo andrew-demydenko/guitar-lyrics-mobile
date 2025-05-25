@@ -6,12 +6,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
-import {
-  SubmitHandler,
-  useFormContext,
-  Form,
-  FieldValues,
-} from "react-hook-form";
+import { SubmitHandler, useFormContext, FieldValues } from "react-hook-form";
 import { View, ScrollView, Text } from "react-native";
 import Toast from "react-native-toast-message";
 import { SongView } from "@/components/SongView";
@@ -23,7 +18,7 @@ import { CHORDS } from "@/constants/Chords";
 import { TInputFields } from "@/entities/form";
 import { Song, ChordPositions } from "@/entities/song";
 import request from "@/lib/axios";
-import { useAuth } from "@/providers/AuthProvider";
+import { useAuthProvider } from "@/providers/AuthProvider";
 // import { ImportSong } from "./ImportSong";
 
 export interface IFormInputs {
@@ -76,7 +71,7 @@ const INPUTS: TInputFields<IFormInputs> = {
 export const SongForm = forwardRef(
   ({ editData }: { editData?: Song | null }, ref) => {
     const { control, handleSubmit, watch, setValue, reset } = useFormContext();
-    const { user } = useAuth();
+    const { user } = useAuthProvider();
     const router = useRouter();
     const [selectedChord, setSelectedChord] = useState<string>(CHORDS[0]);
     const [chordPositions, setChordPositions] = useState<ChordPositions>([]);
@@ -131,11 +126,6 @@ export const SongForm = forwardRef(
     const watchedText = watch("text");
 
     useEffect(() => {
-      Toast.show({
-        type: "info",
-        text1:
-          "Выберите аккорд и нажмите на строку текста, чтобы добавить аккорд",
-      });
       if (editData) {
         reset(editData);
         if (editData.chordPositions) {
@@ -183,35 +173,29 @@ export const SongForm = forwardRef(
     return (
       <ScrollView className="flex-1 p-4">
         <View className="">
-          <Form
-            onSubmit={(data) => {
-              console.log("onSubmit", data);
-              // mutate({ ...data, chords: JSON.stringify(chordPositions) });
-            }}
-          >
-            <Input
-              name={INPUTS["name"].name}
-              label={INPUTS["name"].label}
-              control={control}
-              rules={INPUTS["name"].rules}
-              placeholder={INPUTS["name"].placeholder}
-            />
+          <Input
+            name={INPUTS["name"].name}
+            label={INPUTS["name"].label}
+            control={control}
+            rules={INPUTS["name"].rules}
+            placeholder={INPUTS["name"].placeholder}
+          />
 
-            <Input
-              name={INPUTS["author"].name}
-              label={INPUTS["author"].label}
-              control={control}
-              rules={INPUTS["author"].rules}
-              placeholder={INPUTS["author"].placeholder}
-            />
+          <Input
+            name={INPUTS["author"].name}
+            label={INPUTS["author"].label}
+            control={control}
+            rules={INPUTS["author"].rules}
+            placeholder={INPUTS["author"].placeholder}
+          />
 
-            <Checkbox
-              name={INPUTS["shared"].name}
-              label={INPUTS["shared"].label}
-              control={control}
-            />
+          <Checkbox
+            name={INPUTS["shared"].name}
+            label={INPUTS["shared"].label}
+            control={control}
+          />
 
-            {/* {!editData && (
+          {/* {!editData && (
           <ImportSong
             onImport={(data) => {
               if (data.chords) setChordPositions(data.chords);
@@ -220,53 +204,44 @@ export const SongForm = forwardRef(
           />
         )} */}
 
-            <Textarea
-              name={INPUTS["text"].name}
-              label={INPUTS["text"].label}
-              control={control}
-              rules={INPUTS.text}
-              placeholder={INPUTS["text"].placeholder}
-              className="h-[200px]"
-            />
+          <Textarea
+            name={INPUTS["text"].name}
+            label={INPUTS["text"].label}
+            control={control}
+            rules={INPUTS.text}
+            placeholder={INPUTS["text"].placeholder}
+            className="h-[200px]"
+          />
 
-            {watchedText?.length ? (
-              <ScrollView
-                alwaysBounceVertical={true}
-                className="max-h-[150px] my-4 mb-4"
-              >
-                <View className="flex flex-row flex-wrap gap-2 p-1 pr-3">
-                  {CHORDS.map((chord) => (
-                    <Button
-                      key={chord}
-                      className={`px-2 py-1 rounded-md ${selectedChord === chord ? "bg-blue-500" : "bg-gray-200"}`}
-                      onPress={() => setSelectedChord(chord)}
+          {watchedText?.length ? (
+            <ScrollView
+              alwaysBounceVertical={true}
+              className="max-h-[150px] my-4 mb-4"
+            >
+              <View className="flex flex-row flex-wrap gap-2 p-1 pr-3">
+                {CHORDS.map((chord) => (
+                  <Button
+                    key={chord}
+                    className={`px-2 py-1 rounded-md ${selectedChord === chord ? "bg-blue-500" : "bg-gray-200"}`}
+                    onPress={() => setSelectedChord(chord)}
+                  >
+                    <Text
+                      className={
+                        selectedChord === chord ? "text-white" : "text-black"
+                      }
                     >
-                      <Text
-                        className={
-                          selectedChord === chord ? "text-white" : "text-black"
-                        }
-                      >
-                        {chord}
-                      </Text>
-                    </Button>
-                  ))}
-                </View>
-              </ScrollView>
-            ) : null}
+                      {chord}
+                    </Text>
+                  </Button>
+                ))}
+              </View>
+            </ScrollView>
+          ) : null}
 
-            <SongView
-              song={{ text: watchedText, chordPositions }}
-              editable={{ handleRemoveChord, handleAddChord, handleChordsRiff }}
-            />
-
-            {/* <Button
-          onPress={handleSubmit(onSubmit)}
-          disabled={isSubmitted && !isValid}
-          className="mt-4"
-        >
-          {editData ? "Обновить песню" : "Сохранить песню"}
-        </Button> */}
-          </Form>
+          <SongView
+            song={{ text: watchedText, chordPositions }}
+            editable={{ handleRemoveChord, handleAddChord, handleChordsRiff }}
+          />
         </View>
       </ScrollView>
     );

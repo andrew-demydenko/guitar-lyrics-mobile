@@ -1,8 +1,10 @@
-import { Tabs } from "expo-router";
+import { Entypo } from "@expo/vector-icons";
+import { Tabs, router } from "expo-router";
 import { useColorScheme } from "nativewind";
 import React from "react";
-import { Platform } from "react-native";
+import { View, Platform } from "react-native";
 import { HapticTab } from "@/components/HapticTab";
+import { Button } from "@/components/ui/Button";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
@@ -15,17 +17,26 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[theme].tint,
-        headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
             position: "absolute",
           },
           default: {},
         }),
-        animation: "shift",
+        headerRight: () => {
+          return (
+            <View className="mr-4">
+              <Button
+                onPress={() => router.push("./profile")}
+                className="p-2 rounded-full bg-gray-300 dark:bg-gray-800"
+              >
+                <Entypo name="user" size={24} />
+              </Button>
+            </View>
+          );
+        },
       }}
     >
       <Tabs.Screen

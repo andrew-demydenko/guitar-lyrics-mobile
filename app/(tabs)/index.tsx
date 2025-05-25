@@ -23,7 +23,14 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
 
-      <Button href="./modals/create-song">Создать песню</Button>
+      {/* <Link href="./(modals)/create-song" asChild>
+        
+      </Link> */}
+
+      <Button href="./(modals)/create-song" className="my-4">
+        Создать песню
+      </Button>
+
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
