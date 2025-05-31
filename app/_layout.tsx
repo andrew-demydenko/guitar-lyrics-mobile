@@ -4,7 +4,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect, useCallback } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, Platform } from "react-native";
 import "react-native-reanimated";
 import Toast from "react-native-toast-message";
 import "@/assets/styles/global.css";
@@ -40,7 +40,6 @@ export default function RootLayout() {
       } catch (e) {
         console.warn(e);
       } finally {
-        // Tell the application to render
         setAppIsReady(true);
       }
     }
@@ -50,8 +49,10 @@ export default function RootLayout() {
 
   const onLayoutRootView = useCallback(() => {
     if (appIsReady && loaded) {
+      if (Platform.OS !== "web") {
+        SplashScreen.hideAsync();
+      }
       console.log("ready");
-      SplashScreen.hide();
     }
   }, [appIsReady, loaded]);
 

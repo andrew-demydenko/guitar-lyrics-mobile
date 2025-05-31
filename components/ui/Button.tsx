@@ -82,11 +82,11 @@ export const Button = forwardRef<View, ButtonProps>(
     };
 
     const activeClasses = {
-      primary: "bg-blue-800 ring-2 ring-blue-300",
-      secondary: "bg-gray-800 ring-2 ring-gray-300",
-      outline: "bg-blue-100 border-2 border-blue-700 ring-2 ring-blue-200",
-      danger: "bg-red-700 ring-2 ring-red-300",
-      success: "bg-green-700 ring-2 ring-green-300",
+      primary: "bg-blue-700 border-2 border-blue-300",
+      secondary: "bg-gray-700 border-2 border-gray-300",
+      outline: "bg-blue-100 border-2 border-blue-600",
+      danger: "bg-red-600 border-2 border-red-300",
+      success: "bg-green-600 border-2 border-green-300",
     };
 
     const textColor = {
@@ -108,7 +108,7 @@ export const Button = forwardRef<View, ButtonProps>(
           "flex-row items-center justify-center",
           isActive ? activeClasses[variant] : variantClasses[variant],
           sizeClasses[size],
-          pressed ? "opacity-30" : "",
+          pressed ? "opacity-50" : "",
           disabled ? "bg-gray-400 opacity-80" : "",
           className,
           {
