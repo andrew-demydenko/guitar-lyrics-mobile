@@ -1,9 +1,10 @@
-import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import React, { useEffect, useState } from "react";
-import { View, Text, Modal, Pressable, ScrollView } from "react-native";
+import { View, Text, Modal, ScrollView, TouchableOpacity } from "react-native";
 import { Button } from "@/components/ui/Button";
-import { CHORDS } from "@/constants/Chords";
+import { ChordButton } from "./ChordButton";
+import { ChordsButtons } from "./ChordsButtons";
 
 type ChordRiffPickerProps = {
   chordsRiff?: string[];
@@ -52,23 +53,19 @@ export const ChordRiffPicker = ({
         onRequestClose={() => setIsModalOpen(false)}
       >
         <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="w-4/5 bg-white rounded-lg p-6 shadow-lg">
-            <Text className="text-lg font-medium mb-4">Pick your chords</Text>
+          <View className="w-[95%] max-w-[700px] bg-white rounded-lg p-6 shadow-lg">
+            <View className="flex-row justify-between items-center mb-6">
+              <Text className="text-xl font-medium">Pick your chords</Text>
+              <TouchableOpacity
+                onPress={() => setIsModalOpen(false)}
+                className="p-2"
+              >
+                <Ionicons name="close" size={28} color="#000" />
+              </TouchableOpacity>
+            </View>
 
-            <ScrollView className="max-h-[135px] my-4 mb-4">
-              <View className="flex-row flex-wrap gap-2">
-                {CHORDS.map((chord) => (
-                  <Button
-                    key={chord}
-                    size="sm"
-                    variant="secondary"
-                    onPress={() => setChord(chord)}
-                    className="m-0.5"
-                  >
-                    {chord}
-                  </Button>
-                ))}
-              </View>
+            <ScrollView className="max-h-[135px] mb-4">
+              <ChordsButtons onSelectChord={setChord} />
             </ScrollView>
 
             <View className="mb-4">
@@ -88,21 +85,14 @@ export const ChordRiffPicker = ({
                 )}
               </View>
 
-              <View className="flex-row flex-wrap gap-2">
+              <View className="flex-row flex-wrap gap-1">
                 {selectedChords.length > 0 ? (
                   selectedChords.map((chord, index) => (
-                    <View
+                    <ChordButton
                       key={`chord-${index}`}
-                      className="bg-gray-200 px-2 py-1 rounded flex-row items-center"
-                    >
-                      <Text>{chord}</Text>
-                      <Pressable
-                        onPress={() => handleRemoveChord(index)}
-                        className="ml-1"
-                      >
-                        <AntDesign name="close" size={14} color="red" />
-                      </Pressable>
-                    </View>
+                      onLongPress={() => handleRemoveChord(index)}
+                      chord={chord}
+                    />
                   ))
                 ) : (
                   <Text>No chords selected</Text>
@@ -111,13 +101,6 @@ export const ChordRiffPicker = ({
             </View>
 
             <View className="flex-row justify-end gap-2">
-              <Button
-                variant="secondary"
-                onPress={() => setIsModalOpen(false)}
-                className="mr-2"
-              >
-                Cancel
-              </Button>
               <Button onPress={handleSave}>Save</Button>
             </View>
           </View>

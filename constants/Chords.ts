@@ -212,6 +212,37 @@ export const GROUPED_CHORDS: ChordGroup = {
   ],
 };
 
+export const POPULAR_CHORDS = [
+  // Мажорные
+  "C",
+  "G",
+  "D",
+  "A",
+  "E",
+  "F",
+  // Минорные
+  "Am",
+  "Em",
+  "Dm",
+  "Hm",
+  "Bm",
+  "Gm",
+  // Септаккорды
+  "A7",
+  "E7",
+  "D7",
+  "G7",
+  // Другие частые
+  "Cmaj7",
+  "Am7",
+  "Dm7",
+  "Em7",
+];
+
+export const CHORDS_BY_POPULARITY: string[] = Array.from(
+  new Set([...POPULAR_CHORDS, ...Object.values(GROUPED_CHORDS).flat()])
+);
+
 export const CHORDS: string[] = Array.from(
   new Set(Object.values(GROUPED_CHORDS).flat())
 );

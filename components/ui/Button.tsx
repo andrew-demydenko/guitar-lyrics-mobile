@@ -76,30 +76,43 @@ export const Button = forwardRef<View, ButtonProps>(
     const variantClasses = {
       primary: "bg-blue-600 active:bg-blue-700",
       secondary: "bg-gray-600 active:bg-gray-700",
-      outline: "border-2 border-blue-500 bg-transparent active:bg-blue-100",
+      outline: "border-2 border-blue-500 bg-white active:bg-blue-50",
       danger: "bg-red-500 active:bg-red-600",
       success: "bg-green-500 active:bg-green-600",
     };
 
-    const textColor = variant === "outline" ? "text-blue-600" : "text-white";
+    const activeClasses = {
+      primary: "bg-blue-800 ring-2 ring-blue-300",
+      secondary: "bg-gray-800 ring-2 ring-gray-300",
+      outline: "bg-blue-100 border-2 border-blue-700 ring-2 ring-blue-200",
+      danger: "bg-red-700 ring-2 ring-red-300",
+      success: "bg-green-700 ring-2 ring-green-300",
+    };
+
+    const textColor = {
+      primary: "text-white",
+      secondary: "text-white",
+      outline: isActive ? "text-blue-700" : "text-blue-600",
+      danger: "text-white",
+      success: "text-white",
+    }[variant];
 
     return (
       <Pressable
         ref={ref}
-        disabled={isActive || disabled}
+        disabled={disabled}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onPress={handlePress}
         style={style(
           "flex-row items-center justify-center",
-          variantClasses[variant],
+          isActive ? activeClasses[variant] : variantClasses[variant],
           sizeClasses[size],
-          pressed ? "opacity-20" : "",
-          isActive ? "opacity-75" : "",
+          pressed ? "opacity-30" : "",
           disabled ? "bg-gray-400 opacity-80" : "",
           className,
           {
-            transitionProperty: "background-color, opacity",
+            transitionProperty: "background-color, box-shadow, border-color",
             transitionDuration: "200ms",
           }
         )}

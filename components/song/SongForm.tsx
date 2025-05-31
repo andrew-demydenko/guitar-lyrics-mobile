@@ -5,12 +5,11 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useCallback,
 } from "react";
 import { SubmitHandler, useFormContext, FieldValues } from "react-hook-form";
 import { View, ScrollView, Text } from "react-native";
 import Toast from "react-native-toast-message";
-import { SongView } from "@/components/SongView";
-import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
@@ -18,8 +17,12 @@ import { CHORDS } from "@/constants/Chords";
 import { TInputFields } from "@/entities/form";
 import { Song, ChordPositions } from "@/entities/song";
 import request from "@/lib/axios";
+import { useDebounce } from "@/lib/common";
 import { useAuthProvider } from "@/providers/AuthProvider";
-// import { ImportSong } from "./ImportSong";
+import { ChordsButtons } from "./ChordsButtons";
+import { ImportSong } from "./ImportSong";
+import { SongView } from "./SongView";
+import { isServiceLine, isDistanceValid } from "./utils";
 
 export interface IFormInputs {
   name: string;
@@ -113,7 +116,6 @@ export const SongForm = forwardRef(
     });
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-      console.log("mutate", data);
       mutate({ ...data, chords: JSON.stringify(chordPositions) });
     };
 
@@ -124,6 +126,7 @@ export const SongForm = forwardRef(
     }));
 
     const watchedText = watch("text");
+    const deferredText = useDebounce(watchedText, 500);
 
     useEffect(() => {
       if (editData) {
@@ -134,45 +137,52 @@ export const SongForm = forwardRef(
       }
     }, [editData, reset]);
 
-    const isDistanceValid = (line: string, charIndex: number) => {
-      return !chordPositions.some((chord) => {
-        const [existingCharIndex, , existingLine] = chord;
-        return (
-          existingLine === line && Math.abs(existingCharIndex - charIndex) < 9
+    const handleAddChord = useCallback(
+      (line: string, charIndex: number) => {
+        if (!selectedChord) return;
+
+        if (isServiceLine(line)) {
+          return;
+        }
+
+        if (!isDistanceValid(line, charIndex, chordPositions)) {
+          return;
+        }
+
+        setChordPositions((prev) => [
+          ...prev,
+          [charIndex, selectedChord, line],
+        ]);
+      },
+      [chordPositions, selectedChord]
+    );
+
+    const handleRemoveChord = useCallback(
+      (line: string, charIndex: number) => {
+        setChordPositions(
+          chordPositions.filter(
+            (chord) => !(chord[0] === charIndex && chord[2] === line)
+          )
         );
-      });
-    };
+      },
+      [chordPositions]
+    );
 
-    const handleAddChord = (line: string, charIndex: number) => {
-      if (!selectedChord) {
-        return;
-      }
-      if (!isDistanceValid(line, charIndex)) {
-        return;
-      }
-      setChordPositions((prev) => [...prev, [charIndex, selectedChord, line]]);
-    };
-
-    const handleRemoveChord = (line: string, charIndex: number) => {
-      setChordPositions(
-        chordPositions.filter(
-          (chord) => !(chord[0] === charIndex && chord[2] === line)
-        )
-      );
-    };
-
-    const handleChordsRiff = (chords: typeof CHORDS, lineIndex: number) => {
-      const lines = watchedText.split("\n");
-      if (lineIndex !== null && lineIndex < lines.length) {
-        const chordsString = chords.join(" ");
-        lines[lineIndex] = `| ${chordsString}`;
-        setValue("text", lines.join("\n"));
-      }
-    };
+    const handleChordsRiff = useCallback(
+      (chords: typeof CHORDS, lineIndex: number) => {
+        const lines = deferredText.split("\n");
+        if (lineIndex !== null && lineIndex < lines.length) {
+          const chordsString = chords.join(" ");
+          lines[lineIndex] = `| ${chordsString}`;
+          setValue("text", lines.join("\n"));
+        }
+      },
+      [deferredText, setValue]
+    );
 
     return (
       <ScrollView className="flex-1 p-4">
-        <View className="">
+        <View>
           <Input
             name={INPUTS["name"].name}
             label={INPUTS["name"].label}
@@ -195,14 +205,16 @@ export const SongForm = forwardRef(
             control={control}
           />
 
-          {/* {!editData && (
-          <ImportSong
-            onImport={(data) => {
-              if (data.chords) setChordPositions(data.chords);
-              setValue("text", data.text);
-            }}
-          />
-        )} */}
+          {!editData && (
+            <ImportSong
+              onImport={(data) => {
+                if (data.chords) {
+                  setChordPositions(data.chords);
+                }
+                setValue("text", data.text);
+              }}
+            />
+          )}
 
           <Textarea
             name={INPUTS["text"].name}
@@ -213,34 +225,26 @@ export const SongForm = forwardRef(
             className="h-[200px]"
           />
 
-          {watchedText?.length ? (
+          {deferredText?.length ? (
             <ScrollView
               alwaysBounceVertical={true}
               className="max-h-[150px] my-4 mb-4"
             >
-              <View className="flex flex-row flex-wrap gap-2 p-1 pr-3">
-                {CHORDS.map((chord) => (
-                  <Button
-                    key={chord}
-                    className={`px-2 py-1 rounded-md ${selectedChord === chord ? "bg-blue-500" : "bg-gray-200"}`}
-                    onPress={() => setSelectedChord(chord)}
-                  >
-                    <Text
-                      className={
-                        selectedChord === chord ? "text-white" : "text-black"
-                      }
-                    >
-                      {chord}
-                    </Text>
-                  </Button>
-                ))}
-              </View>
+              <ChordsButtons
+                selectedChord={selectedChord}
+                onSelectChord={setSelectedChord}
+              />
             </ScrollView>
           ) : null}
 
+          <Text className="font-medium text-base">
+            Нажмите на символ, чтобы добавить выбранный аккорд:
+          </Text>
           <SongView
-            song={{ text: watchedText, chordPositions }}
-            editable={{ handleRemoveChord, handleAddChord, handleChordsRiff }}
+            song={{ text: deferredText || "", chordPositions }}
+            handleAddChord={handleAddChord}
+            handleRemoveChord={handleRemoveChord}
+            handleChordsRiff={handleChordsRiff}
           />
         </View>
       </ScrollView>

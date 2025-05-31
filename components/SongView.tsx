@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import { CHORDS } from "@/constants/Chords";
 import { ChordPositions, Song } from "@/entities/song";
-import { transposeLyricChords, transposeChord } from "@/lib/song";
-import { ChordRiffPicker } from "./ChordsRiffPicker";
+import { transposeLyricsChords, transposeChord } from "@/lib/song";
+import { ChordRiffPicker } from "./song/ChordsRiffPicker";
 import { Button } from "./ui/Button";
 
 type TEditable = {
@@ -50,7 +50,7 @@ export const SongView = ({
 
   useEffect(() => {
     if (typeof toneKey !== "undefined") {
-      setTransposeChords(transposeLyricChords(chordPositions, toneKey));
+      setTransposeChords(transposeLyricsChords(chordPositions, toneKey));
     }
   }, [toneKey, chordPositions]);
 

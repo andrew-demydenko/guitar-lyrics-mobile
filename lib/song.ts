@@ -19,7 +19,10 @@ export const transposeChord = (chord: string, steps: number): string => {
   return data.group[newIndex];
 };
 
-export const transposeLyricChords = (chords: ChordPositions, steps: number) => {
+export const transposeLyricsChords = (
+  chords: ChordPositions,
+  steps: number
+) => {
   const newChords: ChordPositions = chords.map((chord: ChordPosition) => {
     return [...chord];
   });
