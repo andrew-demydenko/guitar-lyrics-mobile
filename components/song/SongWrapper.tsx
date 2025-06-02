@@ -1,7 +1,8 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState, useRef } from "react";
-import { View, Text, Animated, TextInput, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { Button } from "@/components/ui/Button";
+import { Settings } from "./SongSettings";
 
 interface ScrollWrapperProps {
   children: (props: { toneKey: number; fontSize: number }) => React.ReactNode;
@@ -16,27 +17,30 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
   const [fontSize, setFontSize] = useState(14);
   const [contentHeight, setContentHeight] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
-  const scrollY = useRef(new Animated.Value(0)).current;
+  const scrollViewRef = useRef<ScrollView>(null);
+  const currentScrollRef = useRef(0);
   const scrollIntervalRef = useRef<number | null>(null);
   const [transposition, setTransposition] = useState(0);
-
-  const scrollViewRef = useRef<ScrollView>(null);
 
   const startScrolling = () => {
     if (scrolling || contentHeight <= containerHeight) return;
 
     setScrolling(true);
-    let currentScroll = 0;
+    currentScrollRef.current = 0;
     const maxScroll = contentHeight - containerHeight;
 
     scrollIntervalRef.current = setInterval(() => {
-      currentScroll = Math.min(
-        currentScroll + 0.5 * speedMultiplier,
+      currentScrollRef.current = Math.min(
+        currentScrollRef.current + 0.5 * speedMultiplier,
         maxScroll
       );
-      scrollY.setValue(currentScroll);
 
-      if (currentScroll >= maxScroll) {
+      scrollViewRef.current?.scrollTo({
+        y: currentScrollRef.current,
+        animated: false,
+      });
+
+      if (currentScrollRef.current >= maxScroll) {
         stopScrolling();
       }
     }, SCROLL_DELAY);
@@ -50,7 +54,6 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
     }
   };
 
-  // Измерение размеров контента
   const handleContentSizeChange = (_: number, h: number) => {
     setContentHeight(h);
   };
@@ -59,9 +62,16 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
     setContainerHeight(e.nativeEvent.layout.height);
   };
 
+  const changeTransposition = (val: number) => {
+    const newTransposition = transposition + val;
+    if (newTransposition >= -9 && newTransposition <= 9) {
+      setTransposition(newTransposition);
+    }
+  };
+
   return (
     <View className="flex-1">
-      <View className="flex-row flex-wrap justify-between mb-3">
+      <View className="flex-row flex-wrap justify-between mb-3 z-auto">
         <View className="flex-row space-x-2 mb-2">
           <Button
             size="sm"
@@ -97,56 +107,27 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
           ))}
         </View>
 
-        <View className="flex-row items-center space-x-2 mb-2">
-          <Text className="text-base">Size:</Text>
-          <Button
-            size="sm"
-            onPress={() => setFontSize((p) => Math.min(p + 2, 24))}
-          >
-            <Text>+</Text>
-          </Button>
-          <Button size="sm" onPress={() => setFontSize(14)}>
-            <Text>D</Text>
-          </Button>
-          <Button
-            size="sm"
-            onPress={() => setFontSize((p) => Math.max(p - 2, 10))}
-          >
-            <Text>-</Text>
-          </Button>
-        </View>
-
-        <View className="flex-row items-center mb-2">
-          <Text className="text-base mr-2">Key:</Text>
-          <TextInput
-            className="border border-gray-300 rounded px-2 py-1 w-12 text-center"
-            keyboardType="numeric"
-            value={transposition.toString()}
-            onChangeText={(t) => {
-              const val = parseInt(t) || 0;
-              if (val >= -9 && val <= 9) setTransposition(val);
-            }}
-          />
-        </View>
+        <Settings
+          fontSize={fontSize}
+          setFontSize={setFontSize}
+          transposition={transposition}
+          onTranspositionChange={changeTransposition}
+        />
       </View>
 
-      <Animated.ScrollView
+      <ScrollView
         ref={scrollViewRef}
         className="flex-1 border border-gray-300 mb-4"
         onContentSizeChange={handleContentSizeChange}
         onLayout={handleLayout}
         scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: true }
-        )}
       >
         <View className="p-2">
           <View className="space-y-2">
             {children({ toneKey: transposition, fontSize })}
           </View>
         </View>
-      </Animated.ScrollView>
+      </ScrollView>
     </View>
   );
 };

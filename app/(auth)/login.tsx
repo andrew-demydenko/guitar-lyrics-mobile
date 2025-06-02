@@ -1,4 +1,5 @@
-import { Link } from "expo-router";
+import { Link, usePathname } from "expo-router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Text, View } from "react-native";
 import { Button } from "@/components/ui/Button";
@@ -47,9 +48,16 @@ const INPUTS: TInputFields<LoginFormInputs> = {
 };
 
 export default function Login() {
-  const { control, handleSubmit } = useForm<LoginFormInputs>({
+  const { control, handleSubmit, reset } = useForm<LoginFormInputs>({
     defaultValues,
   });
+  const pathname = usePathname();
+
+  useEffect(() => {
+    return () => {
+      reset(defaultValues);
+    };
+  }, [pathname, reset]);
 
   const { loading: googleLoading, googleLogin } = useGoogleAuth();
   const { mutateAsync: handleLogin, isPending } = useLogin();

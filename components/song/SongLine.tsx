@@ -12,6 +12,7 @@ interface ISongLine {
   fontSize: number;
   lineIndex: number;
   transposedChords: ChordPositions;
+  editable: boolean;
   handleAddChord?: (line: string, charIndex: number) => void;
   handleRemoveChord?: (line: string, charIndex: number) => void;
   handleChordsRiff?: (chords: typeof CHORDS, lineIndex: number) => void;
@@ -25,6 +26,7 @@ export const SongLine = ({
   handleChordsRiff,
   lineIndex,
   fontSize,
+  editable,
 }: ISongLine) => {
   const chordsOnLineOut = transposedChords.filter(
     (chord) => chord[2] === line && line.length < chord[0]
@@ -89,7 +91,7 @@ export const SongLine = ({
 
   return (
     <View key={lineIndex} className="relative mb-2">
-      <View className="mt-5">
+      <View style={{ marginTop: fontSize + 4 }}>
         <View className="flex-row flex-wrap">
           {line.split("").map((char, charIndex) => {
             const chord = transposedChords.find(
@@ -99,11 +101,12 @@ export const SongLine = ({
             return (
               <View key={charIndex} className="relative">
                 <SongChar
+                  fontSize={fontSize}
                   char={char}
                   chord={chord}
                   charIndex={charIndex}
-                  addChord={addChord}
-                  removeChord={removeChord}
+                  addChord={editable ? addChord : undefined}
+                  removeChord={editable ? removeChord : undefined}
                 />
               </View>
             );
@@ -118,7 +121,7 @@ export const SongLine = ({
                   key={`chord-${chord[0]}-${chord[1]}-${chord[2]}`}
                   chord={chord}
                   fontSize={fontSize}
-                  removeChord={removeChord}
+                  removeChord={editable ? removeChord : undefined}
                 />
               );
             })}

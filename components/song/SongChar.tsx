@@ -33,12 +33,15 @@ const SongCharComponent = ({
   return (
     <View key={charIndex} className="relative">
       {chord && (
-        <View className="absolute bottom-6 left-0 w-[75px]">
+        <View
+          style={{ bottom: fontSize + 5 }}
+          className="absolute left-0 w-[75px]"
+        >
           <View className="flex-row items-center">
             {removeChord ? (
               <ChordButton onLongPress={handleRemoveChord} chord={chord[1]} />
             ) : (
-              <Text style={{ fontSize }} className="text-red-500">
+              <Text className="text-red-500" style={{ fontSize }}>
                 {chord[1]}
               </Text>
             )}
@@ -48,7 +51,7 @@ const SongCharComponent = ({
 
       {addChord ? (
         <Pressable onPress={handleAddChord}>
-          <Text className={`text-black text-lg`}>
+          <Text className={`text-black`} style={{ fontSize }}>
             {char.trim() ? char : "\u00A0"}
           </Text>
         </Pressable>

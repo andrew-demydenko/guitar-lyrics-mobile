@@ -8,10 +8,12 @@ export const SongView = ({
   song,
   toneKey,
   fontSize = 16,
+  editable = false,
   ...props
 }: {
   song: Pick<Song, "text" | "chordPositions">;
   toneKey?: number;
+  editable?: boolean;
   fontSize?: number;
   handleAddChord?: (line: string, charIndex: number) => void;
   handleRemoveChord?: (line: string, charIndex: number) => void;
@@ -52,6 +54,7 @@ export const SongView = ({
               lineIndex={lineIndex}
               transposedChords={transposedChords}
               fontSize={fontSize}
+              editable={editable}
               {...props}
             />
           );

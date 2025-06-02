@@ -1,5 +1,6 @@
 import { AxiosError } from "axios";
-import { Link, router } from "expo-router";
+import { Link, router, usePathname } from "expo-router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, Text, View } from "react-native";
 import { registerUser } from "@/api/auth";
@@ -63,9 +64,16 @@ const INPUTS: TInputFields<RegisterFormInputs> = {
 };
 
 export default function Register() {
-  const { control, handleSubmit } = useForm<RegisterFormInputs>({
+  const { control, handleSubmit, reset } = useForm<RegisterFormInputs>({
     defaultValues,
   });
+  const pathname = usePathname();
+
+  useEffect(() => {
+    return () => {
+      reset(defaultValues);
+    };
+  }, [pathname, reset]);
 
   const onSubmit = async (data: RegisterFormInputs) => {
     try {

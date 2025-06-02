@@ -183,27 +183,11 @@ export const SongForm = forwardRef(
     return (
       <ScrollView className="flex-1 p-4">
         <View>
-          <Input
-            name={INPUTS["name"].name}
-            label={INPUTS["name"].label}
-            control={control}
-            rules={INPUTS["name"].rules}
-            placeholder={INPUTS["name"].placeholder}
-          />
+          <Input {...INPUTS["name"]} control={control} />
 
-          <Input
-            name={INPUTS["author"].name}
-            label={INPUTS["author"].label}
-            control={control}
-            rules={INPUTS["author"].rules}
-            placeholder={INPUTS["author"].placeholder}
-          />
+          <Input {...INPUTS["author"]} control={control} />
 
-          <Checkbox
-            name={INPUTS["shared"].name}
-            label={INPUTS["shared"].label}
-            control={control}
-          />
+          <Checkbox {...INPUTS["shared"]} control={control} />
 
           {!editData && (
             <ImportSong
@@ -217,11 +201,8 @@ export const SongForm = forwardRef(
           )}
 
           <Textarea
-            name={INPUTS["text"].name}
-            label={INPUTS["text"].label}
+            {...INPUTS["text"]}
             control={control}
-            rules={INPUTS.text}
-            placeholder={INPUTS["text"].placeholder}
             className="h-[200px]"
           />
 
