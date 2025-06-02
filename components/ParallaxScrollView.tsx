@@ -1,3 +1,4 @@
+import { useColorScheme } from "nativewind";
 import { StyleSheet } from "react-native";
 import Animated, {
   interpolate,
@@ -13,10 +14,18 @@ const HEADER_HEIGHT = 250;
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
+  headerBackgroundColor?: {
+    light: string;
+    dark: string;
+  };
 }>;
 
-export default function ParallaxScrollView({ children, headerImage }: Props) {
-  // const { theme } = useTheme();
+export default function ParallaxScrollView({
+  children,
+  headerImage,
+  headerBackgroundColor,
+}: Props) {
+  const { colorScheme } = useColorScheme();
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
@@ -41,6 +50,14 @@ export default function ParallaxScrollView({ children, headerImage }: Props) {
     };
   });
 
+  const headerStyle = [
+    styles.header,
+    headerAnimatedStyle,
+    headerBackgroundColor && {
+      backgroundColor: headerBackgroundColor[colorScheme || "light"],
+    },
+  ];
+
   return (
     <ThemedView style={styles.container}>
       <Animated.ScrollView
@@ -51,7 +68,7 @@ export default function ParallaxScrollView({ children, headerImage }: Props) {
       >
         <Animated.View
           className="bg-white dark:bg-gray-900"
-          style={[styles.header, headerAnimatedStyle]}
+          style={headerStyle}
         >
           {headerImage}
         </Animated.View>

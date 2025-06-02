@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/Button";
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
-      // headerBackgroundColor={{ light: "#A1CEDE", dark: "#2D3D47" }}
+      headerBackgroundColor={{ light: "#A1CEDE", dark: "#2D3D47" }}
       headerImage={
         <Image
           source={require("@/assets/images/partial-react-logo.png")}
@@ -22,10 +22,6 @@ export default function HomeScreen() {
         <ThemedText type="title">Welcomeeee!</ThemedText>
         <HelloWave />
       </ThemedView>
-
-      {/* <Link href="./(modals)/create-song" asChild>
-        
-      </Link> */}
 
       <Button href="./(modals)/create-song" className="my-4">
         Создать песню

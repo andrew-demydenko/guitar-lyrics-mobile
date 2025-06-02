@@ -4,9 +4,11 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useCallback,
   ReactNode,
+  useMemo,
 } from "react";
-import { Platform } from "react-native";
+import { logout } from "@/api/auth";
 import { getCurrentUser } from "@/api/user";
 import { User } from "@/entities/user";
 import { clearAuthData } from "@/lib/auth";
@@ -40,18 +42,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const signOut = () => {
-    setUser(null);
-    clearAuthData();
-    router.replace("/login");
-  };
+  const signOut = useCallback(async () => {
+    if (user?.id) {
+      await logout(user.id);
+      setUser(null);
+      clearAuthData();
+      router.replace("/login");
+    }
+  }, [router, setUser, user?.id]);
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (Platform.OS === "ios") {
-        setUser({ name: "test", email: "huxley1991@gmail.com", id: "1" });
-        return;
-      }
       const isAuth = isAuthPage(pathname);
 
       try {
@@ -72,9 +73,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuth();
   }, [router, pathname]);
 
-  return (
-    <AuthContext.Provider value={{ user, setUser, signOut }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({ user, setUser, signOut }),
+    [user, setUser, signOut]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { router } from "expo-router";
 import { API_URL } from "@/constants/Config";
 import { clearAuthData, getAccessToken, setAccessToken } from "@/lib/auth";
 
@@ -11,6 +10,20 @@ const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,
 });
+
+let isRefreshing = false;
+let failedQueue: { resolve: Function; reject: Function }[] = [];
+
+const processQueue = (error: any = null) => {
+  failedQueue.forEach((promise) => {
+    if (error) {
+      promise.reject(error);
+    } else {
+      promise.resolve();
+    }
+  });
+  failedQueue = [];
+};
 
 api.interceptors.request.use(async (config) => {
   const token = await getAccessToken();
@@ -26,19 +39,38 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        try {
+          await new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
+          });
+          return api(originalRequest);
+        } catch (err) {
+          return Promise.reject(err);
+        }
+      }
+
       originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
-        const result = await api.post<null, RefreshTokenResponse>(
-          `${API_URL}/auth/refresh-token`
+        const result = await axios.post<RefreshTokenResponse>(
+          `${API_URL}/auth/refresh-token`,
+          null,
+          {
+            withCredentials: true,
+          }
         );
-        await setAccessToken(result.accessToken);
-
+        await setAccessToken(result.data.accessToken);
+        processQueue();
         return api(originalRequest);
       } catch (refreshError) {
+        processQueue(refreshError);
         await clearAuthData();
-        router.replace("/login");
+
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
 

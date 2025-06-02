@@ -5,16 +5,20 @@ export const registerUser = (data: {
   name: string;
   email: string;
   password: string;
-}) => request.post<{ user: User; accessToken: string }>("/auth/register", data);
+}) =>
+  request.post<null, { user: User; accessToken: string }>(
+    "/auth/register",
+    data
+  );
 
 export const login = (data: { email: string; password: string }) =>
-  request.post<{ user: User; accessToken: string }>("/auth//login", data);
+  request.post<null, { user: User; accessToken: string }>("/auth//login", data);
 
 export const googleAuth = () =>
   request.get<{ user: User; accessToken: string }>("/auth//google");
 
 export const refreshToken = () =>
-  request.post<{ accessToken: string }>("/auth//refresh-token");
+  request.post<null, { accessToken: string }>("/auth//refresh-token");
 
-export const logout = () =>
-  request.post<{ accessToken: string }>("/auth//logout");
+export const logout = (userId: string) =>
+  request.post("/auth/logout", { userId });

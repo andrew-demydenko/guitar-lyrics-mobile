@@ -1,16 +1,16 @@
 import { Song } from "@/entities/song";
 import request from "@/lib/axios";
 
-export const getSharedSongs = async (): Promise<Song[]> => {
-  const response = await request.get("/songs/shared");
+export const getSharedSongs = async () => {
+  const response = await request.get<null, Song[]>("/songs/shared");
 
-  return response.data;
+  return response;
 };
 
-export const getUserSongs = async (userId: string): Promise<Song[]> => {
-  const response = await request.get(`/songs/user/${userId}`);
+export const getUserSongs = async (userId: string) => {
+  const response = await request.get<null, Song[]>(`/songs/user/${userId}`);
 
-  return response.data;
+  return response;
 };
 
 export const getSongById = async (id: string): Promise<Song | null> => {
@@ -36,10 +36,10 @@ export const getSongById = async (id: string): Promise<Song | null> => {
 export const modifySong = async (
   id: string,
   requestData: Song & { userId?: string }
-) => await request.patch<null, Song>(`/songs/${id}`, requestData);
+) => await request.patch<Song>(`/songs/${id}`, requestData);
 
 export const createSong = async (requestData: Song) =>
-  await request.post<null, Song>(`/songs`, requestData);
+  await request.post<Song>(`/songs`, requestData);
 
 export const deleteSong = async (id: string) =>
   await request.delete<null, Song>(`/songs/${id}`);

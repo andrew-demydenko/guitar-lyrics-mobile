@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { ChordPositions, Song } from "@/entities/song";
 import { transposeLyricsChords } from "@/lib/song";
-// import { ChordRiffPicker } from "./ChordsRiffPicker";
-// import { LineOutChord } from "./LineOutChord";
-// import { SongChar } from "./SongChar";
 import { SongLine } from "./SongLine";
-// import { isNotLyricLine } from "./utils";
 
 export const SongView = ({
   song,

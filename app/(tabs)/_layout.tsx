@@ -29,8 +29,8 @@ export default function TabLayout() {
           return (
             <View className="mr-4">
               <Button
-                onPress={() => router.push("./profile")}
-                className="p-2 rounded-full bg-gray-300 dark:bg-gray-800"
+                onPress={() => router.push("/profile")}
+                className="p-1 mb-2 rounded-full bg-gray-300 dark:bg-gray-800"
               >
                 <Entypo name="user" size={24} />
               </Button>
@@ -45,6 +45,36 @@ export default function TabLayout() {
           title: "Home",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="songs"
+        options={{
+          title: "My Songs",
+          headerTitle: "My Songs",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="music.note.list" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: "Search",
+          headerTitle: "Search Songs",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="search" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          title: "Favorites",
+          headerTitle: "Favorite Songs",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="favorite" color={color} />
           ),
         }}
       />

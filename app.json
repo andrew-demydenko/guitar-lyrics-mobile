@@ -2,6 +2,7 @@
   "expo": {
     "name": "guitar-lyrics",
     "slug": "guitar-lyrics",
+    "owner": "huxley1991",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -11,7 +12,12 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["googlechromes", "googlechromes"]
+        "LSApplicationQueriesSchemes": ["googlechromes", "googlechromes"],
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": ["guitarlyrics"]
+          }
+        ]
       },
       "bundleIdentifier": "com.huxley1991.guitar-lyrics"
     },
