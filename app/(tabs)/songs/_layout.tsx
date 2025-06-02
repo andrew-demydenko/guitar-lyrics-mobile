@@ -11,13 +11,6 @@ export default function SongsLayout() {
           title: "My Songs",
         }}
       />
-      <Stack.Screen
-        name="[songId]"
-        options={{
-          headerShown: false,
-          title: "Song",
-        }}
-      />
     </Stack>
   );
 }

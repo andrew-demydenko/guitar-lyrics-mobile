@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { SongItem } from "@/components/song/SongItem";
 import { useSharedSongs } from "@/hooks/data";
 
@@ -9,7 +9,7 @@ export default function FavoritesPage() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
-        <Text>Загрузка...</Text>
+        <ActivityIndicator size="large" />
       </View>
     );
   }

@@ -1,11 +1,9 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { Image } from "expo-image";
 import { Platform, StyleSheet } from "react-native";
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Button } from "@/components/ui/Button";
 
 export default function HomeScreen() {
   return (
@@ -22,10 +20,6 @@ export default function HomeScreen() {
         <ThemedText type="title">Welcomeeee!</ThemedText>
         <HelloWave />
       </ThemedView>
-
-      <Button href="./(modals)/create-song" className="my-4">
-        Создать песню
-      </Button>
 
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
@@ -61,30 +55,6 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
-      </ThemedView>
-      <ThemedView className="d-flex gap-2">
-        <Button size="sm" variant="danger" isActive={true} onPress={() => {}}>
-          test
-        </Button>
-
-        <Button size="sm" variant="danger" isActive={false} onPress={() => {}}>
-          test
-        </Button>
-        <Button size="md" variant="secondary" onPress={() => {}}>
-          test 1
-        </Button>
-        <Button size="lg" variant="success" isActive={false} onPress={() => {}}>
-          test 2
-        </Button>
-        <Button size="sm" variant="outline" isActive={true} onPress={() => {}}>
-          <AntDesign
-            className="mr-2"
-            name="caretright"
-            size={5}
-            color="black"
-          />
-          Play
-        </Button>
       </ThemedView>
     </ParallaxScrollView>
   );

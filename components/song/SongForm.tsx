@@ -29,7 +29,6 @@ export interface IFormInputs {
   author: string;
   text: string;
   shared: boolean;
-  chords?: string;
 }
 
 export const defaultValues: IFormInputs = {
@@ -37,7 +36,6 @@ export const defaultValues: IFormInputs = {
   author: "",
   text: "",
   shared: false,
-  chords: "",
 };
 
 const INPUTS: TInputFields<IFormInputs> = {
@@ -84,14 +82,14 @@ export const SongForm = forwardRef(
       mutationFn: async (data: FieldValues) => {
         const requestData = { ...data, userId: user?.id };
         if (editData) {
-          const song = await request.patch(
+          const song = await request.patch<null, Song>(
             `/songs/${editData.id}`,
             requestData
           );
-          return song.data;
+          return song;
         } else {
-          const song = await request.post("/songs", requestData);
-          return song.data;
+          const song = await request.post<null, Song>("/songs", requestData);
+          return song;
         }
       },
       onSuccess: (data) => {
@@ -101,7 +99,7 @@ export const SongForm = forwardRef(
         queryClient.invalidateQueries({
           queryKey: ["songs", user?.id],
         });
-        router.push(`./songs/${data.id}`);
+        router.push(`/song/${data.id}`);
         Toast.show({
           type: "success",
           text1: "Песня успешно сохранена",

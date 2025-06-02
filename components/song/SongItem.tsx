@@ -10,7 +10,7 @@ interface SongItemProps {
 
 export const SongItem = ({ song }: SongItemProps) => {
   return (
-    <Link href={`./songs/${song.id}`} asChild>
+    <Link href={`/song/${song.id}`} asChild>
       <View
         className={`
         mb-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm shadow-black/10

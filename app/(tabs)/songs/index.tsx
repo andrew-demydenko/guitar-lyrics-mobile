@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { SongItem } from "@/components/song/SongItem";
 import { useUserSongs } from "@/hooks/data";
 import { useAuthProvider } from "@/providers/AuthProvider";
@@ -11,7 +11,7 @@ export default function SongsPage() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
-        <Text>Загрузка...</Text>
+        <ActivityIndicator size="large" />
       </View>
     );
   }
