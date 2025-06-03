@@ -1,31 +1,37 @@
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import cn from "classnames";
 import { Tabs, router } from "expo-router";
-import { useColorScheme } from "nativewind";
 import React from "react";
 import { View, Platform } from "react-native";
 import { FAB, IconButton } from "react-native-paper";
 import { HapticTab } from "@/components/HapticTab";
+import TabBarBackground from "@/components/TabBarBackground";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import TabBarBackground from "@/components/ui/TabBarBackground";
-import { Colors } from "@/constants/Colors";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function TabLayout() {
-  const { colorScheme } = useColorScheme();
-  const theme = colorScheme || "light";
+  const { getColor } = useThemeColor();
 
   return (
     <View className="flex-1">
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Colors[theme].tint,
+          headerStyle: {
+            borderBottomColor: getColor("secondary"),
+            boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.3)",
+          },
+          tabBarActiveTintColor: getColor("active"),
+          tabBarInactiveTintColor: getColor("secondary"),
           tabBarButton: HapticTab,
           tabBarBackground: TabBarBackground,
           tabBarStyle: Platform.select({
             ios: {
               position: "absolute",
             },
-            default: {},
+            default: {
+              borderTopColor: getColor("secondary"),
+              boxShadow: "0 0 10px 2px rgba(0, 0, 0, 0.3)",
+            },
           }),
           headerRight: () => {
             return (

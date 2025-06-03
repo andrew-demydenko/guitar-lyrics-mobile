@@ -12,13 +12,13 @@ export const registerUser = (data: {
   );
 
 export const login = (data: { email: string; password: string }) =>
-  request.post<null, { user: User; accessToken: string }>("/auth//login", data);
+  request.post<{ user: User; accessToken: string }>("/auth/login", data);
 
 export const googleAuth = () =>
-  request.get<{ user: User; accessToken: string }>("/auth//google");
+  request.get<{ user: User; accessToken: string }>("/auth/google");
 
 export const refreshToken = () =>
-  request.post<null, { accessToken: string }>("/auth//refresh-token");
+  request.post<null, { accessToken: string }>("/auth/refresh-token");
 
 export const logout = (userId: string) =>
   request.post("/auth/logout", { userId });

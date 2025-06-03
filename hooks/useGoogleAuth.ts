@@ -1,5 +1,3 @@
-"use client";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as AuthSession from "expo-auth-session";
 import { useRouter, useGlobalSearchParams } from "expo-router";
