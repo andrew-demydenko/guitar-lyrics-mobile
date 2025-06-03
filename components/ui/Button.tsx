@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { style } from "twrnc";
 
-interface ButtonProps extends PressableProps {
+export interface ButtonProps extends PressableProps {
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;

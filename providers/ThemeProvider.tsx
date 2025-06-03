@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/native";
 import { useColorScheme } from "nativewind";
 import React from "react";
+import { PaperProvider } from "react-native-paper";
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -15,7 +16,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <NavigationThemeProvider value={navigationTheme}>
-      {children}
+      <PaperProvider theme={navigationTheme}>{children}</PaperProvider>
     </NavigationThemeProvider>
   );
 };

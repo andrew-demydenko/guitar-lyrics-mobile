@@ -72,12 +72,12 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
   return (
     <View className="flex-1">
       <View className="flex-row flex-wrap justify-between mb-3 z-auto">
-        <View className="flex-row space-x-2 mb-2">
+        <View className="flex-row mb-2">
           <Button
             size="sm"
             onPress={startScrolling}
             disabled={scrolling}
-            className="flex-row items-center"
+            className="flex-row mr-2 items-center"
           >
             <AntDesign name="caretright" size={14} className="mr-1" />
             <Text>Play</Text>
@@ -93,10 +93,11 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
           </Button>
         </View>
 
-        <View className="flex-row items-center space-x-2 mb-2">
+        <View className="flex-row items-center mb-2">
           <Text className="text-base">Speed:</Text>
           {speeds.map((speed) => (
             <Button
+              className="mr-2"
               key={speed}
               size="sm"
               variant={speed === speedMultiplier ? "primary" : "secondary"}
