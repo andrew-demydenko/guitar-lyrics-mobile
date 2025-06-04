@@ -1,9 +1,9 @@
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
-import { View, Text, Platform, ActivityIndicator } from "react-native";
+import { Platform, ActivityIndicator } from "react-native";
 import { SongView } from "@/components/song/SongView";
 import { ScrollWrapper } from "@/components/song/SongWrapper";
-import { Button } from "@/components/ui/Button";
+import { View, Text, Button } from "@/components/ui";
 import { useSongById } from "@/hooks/data";
 
 export const options = () => ({

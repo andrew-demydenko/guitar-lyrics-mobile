@@ -1,15 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  TextInput,
-  Switch,
-  TouchableOpacity,
-} from "react-native";
+import { Modal, TextInput, Switch, TouchableOpacity } from "react-native";
 import Toast from "react-native-toast-message";
-import { Button } from "@/components/ui/Button";
+import { View, Text, Button } from "@/components/ui";
 import { CHORDS } from "@/constants/Chords";
 import { ChordPositions } from "@/entities/song";
 import { isServiceLine, isChordsLine, addExtraSpaceOnRepeat } from "./utils";

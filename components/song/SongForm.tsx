@@ -8,11 +8,10 @@ import React, {
   useCallback,
 } from "react";
 import { SubmitHandler, useFormContext, FieldValues } from "react-hook-form";
-import { View, ScrollView, Text } from "react-native";
+import { ScrollView } from "react-native";
 import Toast from "react-native-toast-message";
+import { View, Text, Input, Textarea } from "@/components/ui";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { Input } from "@/components/ui/Input";
-import { Textarea } from "@/components/ui/Textarea";
 import { CHORDS } from "@/constants/Chords";
 import { TInputFields } from "@/entities/form";
 import { Song, ChordPositions } from "@/entities/song";

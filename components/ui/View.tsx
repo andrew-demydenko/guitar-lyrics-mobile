@@ -1,11 +1,22 @@
 import cn from "classnames";
-import { View as RNView, type ViewProps } from "react-native";
+import { forwardRef } from "react";
+import { View as RNView, type ViewProps as RNViewProps } from "react-native";
 
-export type Props = ViewProps & {
+export interface ViewProps extends RNViewProps {
   lightColor?: string;
   darkColor?: string;
-};
-
-export function View({ className, ...otherProps }: Props) {
-  return <RNView className={cn("bg-background", className)} {...otherProps} />;
 }
+
+export const View = forwardRef<RNView, ViewProps>(
+  ({ className, ...otherProps }, ref) => {
+    return (
+      <RNView
+        ref={ref}
+        className={cn("bg-background", className)}
+        {...otherProps}
+      />
+    );
+  }
+);
+
+View.displayName = "View";

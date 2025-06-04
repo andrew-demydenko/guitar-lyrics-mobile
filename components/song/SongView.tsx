@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
+import { View } from "@/components/ui";
 import { ChordPositions, Song } from "@/entities/song";
 import { transposeLyricsChords } from "@/lib/song";
 import { SongLine } from "./SongLine";

@@ -1,14 +1,13 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState, useRef } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { Button } from "@/components/ui/Button";
+import { ScrollView } from "react-native";
+import { View, Button } from "@/components/ui";
 import { Settings } from "./SongSettings";
 
 interface ScrollWrapperProps {
   children: (props: { toneKey: number; fontSize: number }) => React.ReactNode;
 }
 
-const speeds = [1, 2, 3];
 const SCROLL_DELAY = 16; // ~60 FPS
 
 export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
@@ -26,7 +25,6 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
     if (scrolling || contentHeight <= containerHeight) return;
 
     setScrolling(true);
-    currentScrollRef.current = 0;
     const maxScroll = contentHeight - containerHeight;
 
     scrollIntervalRef.current = setInterval(() => {
@@ -72,40 +70,29 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
   return (
     <View className="flex-1">
       <View className="flex-row flex-wrap justify-between mb-3 z-auto">
-        <View className="flex-row mb-2">
+        <View className="flex-row mb-2 gap-4">
           <Button
             size="sm"
-            onPress={startScrolling}
-            disabled={scrolling}
-            className="flex-row mr-2 items-center"
+            onPress={scrolling ? stopScrolling : startScrolling}
+            className="flex-row items-center w-24"
           >
-            <AntDesign name="caretright" size={14} className="mr-1" />
-            <Text>Play</Text>
+            <AntDesign
+              name={scrolling ? "pause" : "caretright"}
+              className="mr-1"
+              size={14}
+            />
+            {scrolling ? "Stop" : "Play"}
           </Button>
           <Button
+            key={speedMultiplier}
             size="sm"
-            onPress={stopScrolling}
-            disabled={!scrolling}
-            className="flex-row items-center"
+            variant={"primary"}
+            onPress={() =>
+              setSpeedMultiplier(speedMultiplier < 3 ? speedMultiplier + 1 : 1)
+            }
           >
-            <AntDesign name="pause" size={14} className="mr-1" />
-            <Text>Stop</Text>
+            Speed: {speedMultiplier}x
           </Button>
-        </View>
-
-        <View className="flex-row items-center mb-2">
-          <Text className="text-base">Speed:</Text>
-          {speeds.map((speed) => (
-            <Button
-              className="mr-2"
-              key={speed}
-              size="sm"
-              variant={speed === speedMultiplier ? "primary" : "secondary"}
-              onPress={() => setSpeedMultiplier(speed)}
-            >
-              <Text>{speed}x</Text>
-            </Button>
-          ))}
         </View>
 
         <Settings

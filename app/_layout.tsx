@@ -4,10 +4,11 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect, useCallback } from "react";
-import { ActivityIndicator, View, Platform } from "react-native";
+import { ActivityIndicator, Platform } from "react-native";
 import "react-native-reanimated";
 import Toast from "react-native-toast-message";
 import "@/assets/styles/global.css";
+import { View } from "@/components/ui";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 

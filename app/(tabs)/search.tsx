@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { ScrollView, ActivityIndicator } from "react-native";
 import { SongItem } from "@/components/song/SongItem";
+import { View, Text } from "@/components/ui";
 import { useSharedSongs } from "@/hooks/data";
 
 export default function FavoritesPage() {

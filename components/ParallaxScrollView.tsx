@@ -5,7 +5,7 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 import { useBottomTabOverflow } from "@/components/TabBarBackground";
-import { View } from "@/components/ui/View";
+import { View } from "@/components/ui";
 import type { PropsWithChildren, ReactElement } from "react";
 
 const HEADER_HEIGHT = 250;

@@ -1,8 +1,7 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
-import { View, Text } from "react-native";
 import { ModalActions } from "@/components/ModalActions";
-import { Button } from "@/components/ui/Button";
+import { View, Text, Button } from "@/components/ui";
 
 interface SettingsProps {
   fontSize: number;
@@ -33,7 +32,7 @@ export const Settings = ({
             disabled={fontSize <= 8}
             onPress={() => setFontSize(Math.max(fontSize - 2, 8))}
           >
-            <Text>-</Text>
+            -
           </Button>
           <Button className="mx-2" size="sm" onPress={() => setFontSize(14)}>
             D
@@ -43,7 +42,7 @@ export const Settings = ({
             disabled={fontSize >= 28}
             onPress={() => setFontSize(Math.min(fontSize + 2, 28))}
           >
-            <Text>+</Text>
+            +
           </Button>
         </View>
 
@@ -54,7 +53,7 @@ export const Settings = ({
             disabled={transposition === -9}
             onPress={() => onTranspositionChange(-1)}
           >
-            <Text>-</Text>
+            -
           </Button>
           <Text className="w-[36px] mx-2 text-center">{transposition}</Text>
           <Button
@@ -62,7 +61,7 @@ export const Settings = ({
             disabled={transposition === 9}
             onPress={() => onTranspositionChange(1)}
           >
-            <Text>+</Text>
+            +
           </Button>
         </View>
       </>

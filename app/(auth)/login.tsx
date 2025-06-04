@@ -1,9 +1,7 @@
 import { Link, usePathname } from "expo-router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Text, View } from "react-native";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { View, Text, Button, Input } from "@/components/ui";
 import { TInputFields } from "@/entities/form";
 import { useLogin } from "@/hooks/data/useAuth";
 import { useGoogleAuth } from "@/hooks/useGoogleAuth";

@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { View, Text } from "react-native";
+import { View, Text } from "@/components/ui";
 import { CHORDS } from "@/constants/Chords";
 import { ChordPositions } from "@/entities/song";
 import { ChordRiffPicker } from "./ChordsRiffPicker";

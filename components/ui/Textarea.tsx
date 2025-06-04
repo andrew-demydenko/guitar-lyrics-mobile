@@ -1,6 +1,8 @@
 import React from "react";
 import { useController, Control, FieldValues, Path } from "react-hook-form";
-import { TextInput, View, Text } from "react-native";
+import { TextInput } from "react-native";
+import { Text } from "./Text";
+import { View } from "./View";
 
 type TextareaProps<T extends FieldValues> = {
   name: Path<T>;

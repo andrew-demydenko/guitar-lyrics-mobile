@@ -2,8 +2,7 @@ import { Image } from "expo-image";
 import { Platform, StyleSheet } from "react-native";
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { Text } from "@/components/ui/Text";
-import { View } from "@/components/ui/View";
+import { View, Text } from "@/components/ui";
 
 export default function HomeScreen() {
   return (

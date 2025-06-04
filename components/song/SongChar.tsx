@@ -1,5 +1,6 @@
 import { useCallback, memo } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable } from "react-native";
+import { View, Text } from "@/components/ui";
 import { ChordPosition } from "@/entities/song";
 import { ChordButton } from "./ChordButton";
 

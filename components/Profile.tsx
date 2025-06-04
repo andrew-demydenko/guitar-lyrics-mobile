@@ -1,6 +1,6 @@
 import { useColorScheme } from "nativewind";
-import { View, Text, Switch, ScrollView } from "react-native";
-import { Button } from "@/components/ui/Button";
+import { Switch, ScrollView } from "react-native";
+import { Button, View, Text } from "@/components/ui";
 import { useAuthProvider } from "@/providers/AuthProvider";
 
 export default function ProfileDrawer() {

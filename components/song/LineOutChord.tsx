@@ -1,7 +1,6 @@
 import { useCallback } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "@/components/ui";
 import { ChordPosition } from "@/entities/song";
-import { Button } from "../ui/Button";
 
 interface ILineOutChord {
   chord: ChordPosition;

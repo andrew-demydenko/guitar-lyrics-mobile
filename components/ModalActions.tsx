@@ -1,14 +1,14 @@
 import cn from "classnames";
 import React, { useState, useRef, useCallback } from "react";
 import {
-  View,
   Pressable,
   Modal,
   Animated,
   PressableProps,
   Dimensions,
+  View as RNView,
 } from "react-native";
-import { ButtonProps } from "@/components/ui/Button";
+import { ButtonProps, View } from "@/components/ui";
 
 interface ModalActionsProps {
   backdrop?: string;
@@ -27,8 +27,8 @@ export const ModalActions = ({
   const [isOpen, setIsOpen] = useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, right: 0 });
   const [isMeasured, setIsMeasured] = useState(false);
-  const modalContentRef = useRef<View>(null);
-  const buttonRef = useRef<View>(null);
+  const modalContentRef = useRef<RNView>(null);
+  const buttonRef = useRef<RNView>(null);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const onShowModal = useCallback(() => {
@@ -42,7 +42,6 @@ export const ModalActions = ({
           let right = screenWidth - x - width - 10;
           let top = y + height + 8;
 
-          console.log(modalWidth);
           right = Math.max(10, Math.min(right, screenWidth - modalWidth - 10));
 
           if (top + modalHeight > screenHeight) {
@@ -75,7 +74,6 @@ export const ModalActions = ({
     zIndex: 100,
   };
 
-  console.log(modalPosition, isMeasured, isOpen);
   return (
     <View ref={buttonRef} className="relative">
       <Animated.View style={animatedButtonStyle}>

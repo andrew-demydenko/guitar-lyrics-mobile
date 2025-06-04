@@ -1,6 +1,8 @@
 import React from "react";
 import { useController, Control, FieldValues, Path } from "react-hook-form";
-import { Pressable, View, Text } from "react-native";
+import { Pressable } from "react-native";
+import { Text } from "./Text";
+import { View } from "./View";
 
 type CheckboxProps<T extends FieldValues> = {
   name: Path<T>;

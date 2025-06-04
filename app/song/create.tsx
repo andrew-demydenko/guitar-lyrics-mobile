@@ -1,13 +1,13 @@
 import { Stack } from "expo-router";
 import React, { useRef } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { View, Platform } from "react-native";
+import { Platform } from "react-native";
 import {
   SongForm,
   defaultValues,
   IFormInputs,
 } from "@/components/song/SongForm";
-import { Button } from "@/components/ui/Button";
+import { View, Button } from "@/components/ui";
 
 export default function ModalScreen() {
   const methods = useForm<IFormInputs>({

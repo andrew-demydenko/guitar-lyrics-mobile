@@ -1,8 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import React, { useEffect, useState } from "react";
-import { View, Text, Modal, ScrollView, TouchableOpacity } from "react-native";
-import { Button } from "@/components/ui/Button";
+import { Modal, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, Button } from "@/components/ui";
 import { ChordButton } from "./ChordButton";
 import { ChordsButtons } from "./ChordsButtons";
 

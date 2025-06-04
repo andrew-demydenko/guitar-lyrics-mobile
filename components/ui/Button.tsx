@@ -2,12 +2,12 @@ import { Href, router } from "expo-router";
 import React, { forwardRef, useState, useCallback } from "react";
 import {
   Pressable,
-  Text,
   PressableProps,
   GestureResponderEvent,
   View,
 } from "react-native";
 import { style } from "twrnc";
+import { Text } from "./Text";
 
 export interface ButtonProps extends PressableProps {
   children: React.ReactNode;
@@ -118,7 +118,7 @@ export const Button = forwardRef<View, ButtonProps>(
         )}
         {...rest}
       >
-        <Text style={style(`${textColor} font-semibold text-center`)}>
+        <Text className={`${textColor} font-semibold text-center`}>
           {children}
         </Text>
       </Pressable>

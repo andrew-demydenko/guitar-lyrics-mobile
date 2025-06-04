@@ -5,8 +5,6 @@
 
 import TWColors from "tailwindcss/colors";
 
-console.log(TWColors);
-
 export const Colors = {
   light: {
     primary: TWColors.gray[800],

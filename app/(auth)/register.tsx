@@ -2,10 +2,9 @@ import { AxiosError } from "axios";
 import { Link, router, usePathname } from "expo-router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Alert, Text, View } from "react-native";
+import { Alert } from "react-native";
 import { registerUser } from "@/api/auth";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { View, Button, Input, Text } from "@/components/ui";
 import { TInputFields } from "@/entities/form";
 import { setAccessToken } from "@/lib/auth";
 

@@ -1,6 +1,8 @@
 import React from "react";
 import { useController, Control, FieldValues, Path } from "react-hook-form";
-import { TextInput, View, Text, KeyboardTypeOptions } from "react-native";
+import { TextInput, KeyboardTypeOptions } from "react-native";
+import { Text } from "./Text";
+import { View } from "./View";
 
 interface InputProps<T extends FieldValues> {
   name: Path<T>;

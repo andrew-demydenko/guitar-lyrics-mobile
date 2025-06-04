@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { View } from "react-native";
+import { View } from "@/components/ui";
 import { CHORDS_BY_POPULARITY } from "@/constants/Chords";
 import { ChordButton } from "./ChordButton";
 
