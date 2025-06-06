@@ -31,7 +31,7 @@ export const Settings = ({
     >
       <>
         <View className="flex-row justify-end items-center mb-3">
-          <Text className="text-base mr-2">Size:</Text>
+          <Text className="text-base text-text mr-2">Size:</Text>
           <IconButton
             disabled={fontSize <= 8}
             containerColor={primaryColor}
@@ -61,7 +61,7 @@ export const Settings = ({
         </View>
 
         <View className="flex-row justify-end items-center">
-          <Text className="text-base mr-2">Tone:</Text>
+          <Text className="text-base text-text mr-2">Tone:</Text>
 
           <IconButton
             disabled={transposition === -9}

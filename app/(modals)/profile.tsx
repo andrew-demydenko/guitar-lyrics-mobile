@@ -11,12 +11,6 @@ export default function ProfileModal() {
           presentation: "transparentModal",
           gestureEnabled: true,
           gestureDirection: "horizontal",
-          headerStyle: {
-            backgroundColor: "white",
-          },
-          contentStyle: {
-            backgroundColor: "white",
-          },
           animation: "slide_from_bottom",
         }}
       />

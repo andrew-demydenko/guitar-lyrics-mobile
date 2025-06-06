@@ -20,7 +20,7 @@ interface ModalActionsProps {
 const minModalWidth = 180;
 
 export const ModalActions = ({
-  backdrop = "bg-black/30",
+  backdrop = "bg-black/40",
   button,
   children,
 }: ModalActionsProps) => {
@@ -100,7 +100,7 @@ export const ModalActions = ({
         <View
           ref={modalContentRef}
           className={cn(
-            "absolute bg-white border border-gray-300 rounded-md shadow-md p-2",
+            "absolute bg-background border border-gray-300 rounded-md shadow-md p-2",
             {
               invisible: !isMeasured,
             }

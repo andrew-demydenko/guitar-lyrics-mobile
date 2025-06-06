@@ -42,7 +42,7 @@ const SongCharComponent = ({
             {removeChord ? (
               <ChordButton onLongPress={handleRemoveChord} chord={chord[1]} />
             ) : (
-              <Text className="text-red-500" style={{ fontSize }}>
+              <Text className="text-red-400" style={{ fontSize }}>
                 {chord[1]}
               </Text>
             )}
@@ -52,12 +52,12 @@ const SongCharComponent = ({
 
       {addChord ? (
         <Pressable onPress={handleAddChord}>
-          <Text className={`text-black`} style={{ fontSize }}>
+          <Text style={{ fontSize }} className="text-text">
             {char.trim() ? char : "\u00A0"}
           </Text>
         </Pressable>
       ) : (
-        <Text style={{ fontSize }} className={`text-black `}>
+        <Text style={{ fontSize }} className="text-text">
           {char.trim() ? char : "\u00A0"}
         </Text>
       )}

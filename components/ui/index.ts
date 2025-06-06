@@ -4,3 +4,4 @@ export * from "./Input";
 export * from "./Button";
 export * from "./IconSymbol";
 export * from "./Checkbox";
+export * from "./BackButton";

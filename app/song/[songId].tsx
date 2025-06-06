@@ -3,17 +3,8 @@ import React, { useEffect } from "react";
 import { Platform, ActivityIndicator } from "react-native";
 import { SongView } from "@/components/song/SongView";
 import { ScrollWrapper } from "@/components/song/SongWrapper";
-import { View, Text, Button } from "@/components/ui";
+import { View, Button } from "@/components/ui";
 import { useSongById } from "@/hooks/data";
-
-export const options = () => ({
-  title: "Song",
-  headerRight: () => (
-    <Button>
-      <Text>Edit Song</Text>
-    </Button>
-  ),
-});
 
 export default function SongsPage() {
   const { songId } = useLocalSearchParams();
@@ -22,7 +13,7 @@ export default function SongsPage() {
 
   useEffect(() => {
     navigation.setOptions({
-      title: `${song?.name} - ${song?.author}`,
+      title: song ? `${song.name} - ${song.author}` : "Song",
       headerRight: () => (
         <Button
           className={Platform.select({

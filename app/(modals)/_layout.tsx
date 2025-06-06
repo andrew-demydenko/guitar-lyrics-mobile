@@ -1,9 +1,9 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Stack, useRouter } from "expo-router";
-import { TouchableOpacity, Platform } from "react-native";
+import { Stack } from "expo-router";
+import { BackButton } from "@/components/ui";
+import { useHeaderStyles } from "@/hooks/useHeaderStyles";
 
 export default function ModalLayout() {
-  const router = useRouter();
+  const headerStyles = useHeaderStyles();
 
   return (
     <Stack
@@ -12,31 +12,12 @@ export default function ModalLayout() {
         presentation: "modal",
         headerTransparent: false,
         headerShadowVisible: false,
+        headerStyle: headerStyles as any,
         contentStyle: {
           padding: 10,
           paddingBottom: 0,
         },
-        headerLeft: () => (
-          <TouchableOpacity
-            className={Platform.select({
-              ios: "ml-0",
-              default: "ml-4",
-            })}
-            onPress={() => {
-              if (router.canGoBack()) {
-                router.back();
-              } else {
-                router.replace("/");
-              }
-            }}
-          >
-            <Ionicons
-              name="chevron-back-outline"
-              className="text-black"
-              size={24}
-            />
-          </TouchableOpacity>
-        ),
+        headerLeft: () => <BackButton />,
       }}
     />
   );

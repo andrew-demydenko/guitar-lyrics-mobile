@@ -4,14 +4,17 @@ import { useThemeColor } from "./useThemeColor";
 export const useHeaderStyles = () => {
   const { getThemeColor } = useThemeColor();
   const borderColor = getThemeColor("secondary");
+  const backgroundColor = getThemeColor("background");
 
   if (Platform.OS === "web") {
     return {
+      backgroundColor,
       borderBottomColor: borderColor,
       boxShadow: `0 0 10px 3px ${borderColor}`,
     };
   } else {
     return {
+      backgroundColor,
       borderBottomColor: borderColor,
       borderBottomWidth: 1,
       shadowColor: borderColor,

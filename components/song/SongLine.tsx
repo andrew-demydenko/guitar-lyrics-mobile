@@ -84,7 +84,7 @@ export const SongLine = memo(
 
     if (isNotLyricLine(line)) {
       return (
-        <Text key={lineIndex} className="mb-2">
+        <Text key={lineIndex} className="mb-2 text-text">
           {line}
         </Text>
       );
