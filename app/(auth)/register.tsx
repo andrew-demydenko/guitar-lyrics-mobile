@@ -89,8 +89,8 @@ export default function Register() {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-white px-4">
-      <View className="w-full max-w-md bg-white">
+    <View className="flex-1 items-center justify-center px-4">
+      <View className="w-full max-w-md">
         <Text className="text-2xl font-bold mb-6">Регистрация</Text>
 
         <Input<RegisterFormInputs> {...INPUTS.name} control={control} />
@@ -108,7 +108,11 @@ export default function Register() {
           secureTextEntry
         />
 
-        <Button onPress={handleSubmit(onSubmit)} className="mt-4">
+        <Button
+          contentClass="w-[400]"
+          onPress={handleSubmit(onSubmit)}
+          className="mt-4"
+        >
           Зарегистрироваться
         </Button>
 

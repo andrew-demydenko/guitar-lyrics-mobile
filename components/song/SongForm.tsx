@@ -5,12 +5,13 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useRef,
   useCallback,
 } from "react";
 import { SubmitHandler, useFormContext, FieldValues } from "react-hook-form";
 import { ScrollView } from "react-native";
 import Toast from "react-native-toast-message";
-import { View, Text, Input, Textarea } from "@/components/ui";
+import { View, Text, Input } from "@/components/ui";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { CHORDS } from "@/constants/Chords";
 import { TInputFields } from "@/entities/form";
@@ -75,8 +76,11 @@ export const SongForm = forwardRef(
     const router = useRouter();
     const [selectedChord, setSelectedChord] = useState<string>(CHORDS[0]);
     const [chordPositions, setChordPositions] = useState<ChordPositions>([]);
-
+    const watchedText = watch("text");
+    const deferredText = useDebounce(watchedText, 500);
+    const textRef = useRef(deferredText);
     const queryClient = useQueryClient();
+
     const { mutate } = useMutation({
       mutationFn: async (data: FieldValues) => {
         const requestData = { ...data, userId: user?.id };
@@ -116,14 +120,15 @@ export const SongForm = forwardRef(
       mutate({ ...data, chords: JSON.stringify(chordPositions) });
     };
 
+    useEffect(() => {
+      textRef.current = deferredText;
+    }, [deferredText]);
+
     useImperativeHandle(ref, () => ({
       handleSubmit: () => {
         handleSubmit(onSubmit)();
       },
     }));
-
-    const watchedText = watch("text");
-    const deferredText = useDebounce(watchedText, 500);
 
     useEffect(() => {
       if (editData) {
@@ -167,14 +172,14 @@ export const SongForm = forwardRef(
 
     const handleChordsRiff = useCallback(
       (chords: typeof CHORDS, lineIndex: number) => {
-        const lines = deferredText.split("\n");
+        const lines = textRef.current.split("\n");
         if (lineIndex !== null && lineIndex < lines.length) {
           const chordsString = chords.join(" ");
           lines[lineIndex] = `| ${chordsString}`;
           setValue("text", lines.join("\n"));
         }
       },
-      [deferredText, setValue]
+      [setValue]
     );
 
     return (
@@ -197,9 +202,10 @@ export const SongForm = forwardRef(
             />
           )}
 
-          <Textarea
+          <Input
             {...INPUTS["text"]}
             control={control}
+            multiline={true}
             className="h-[200px]"
           />
 

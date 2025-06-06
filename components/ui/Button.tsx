@@ -1,25 +1,38 @@
+import cn from "classnames";
 import { Href, router } from "expo-router";
-import React, { forwardRef, useState, useCallback } from "react";
+import { cssInterop } from "nativewind";
+import React, { forwardRef, useCallback } from "react";
+import { GestureResponderEvent, View } from "react-native";
 import {
-  Pressable,
-  PressableProps,
-  GestureResponderEvent,
-  View,
-} from "react-native";
-import { style } from "twrnc";
-import { Text } from "./Text";
+  Button as RNButton,
+  ButtonProps as RNButtonProps,
+} from "react-native-paper";
+import { useThemeColor, ThemeColorName } from "@/hooks/useThemeColor";
+import { darken } from "@/lib/common";
 
-export interface ButtonProps extends PressableProps {
+export interface ButtonProps extends RNButtonProps {
   children: React.ReactNode;
   className?: string;
+  labelClass?: string;
+  contentClass?: string;
   disabled?: boolean;
   isActive?: boolean;
   size?: "sm" | "md" | "lg";
-  variant?: "primary" | "secondary" | "outline" | "danger" | "success";
-  type?: "button" | "submit" | "reset";
-  form?: string;
   href?: Href;
+  buttonColor?: "primary" | "secondary" | "danger" | "success" | "info";
 }
+
+const StyledButton = cssInterop(RNButton, {
+  className: {
+    target: "style",
+  },
+  labelClass: {
+    target: "labelStyle",
+  },
+  contentClass: {
+    target: "contentStyle",
+  },
+});
 
 export const Button = forwardRef<View, ButtonProps>(
   (
@@ -29,33 +42,18 @@ export const Button = forwardRef<View, ButtonProps>(
       isActive = false,
       disabled = false,
       size = "md",
-      variant = "primary",
       onPressIn: externalPressIn,
       onPressOut: externalPressOut,
       onPress: externalOnPress,
       href,
+      mode = "elevated",
+      buttonColor = "primary",
+      labelClass,
       ...rest
     },
     ref
   ) => {
-    const [pressed, setPressed] = useState(false);
-
-    const handlePressOut = useCallback(
-      (event: GestureResponderEvent) => {
-        setPressed(false);
-        externalPressOut?.(event);
-      },
-      [externalPressOut]
-    );
-
-    const handlePressIn = useCallback(
-      (event: GestureResponderEvent) => {
-        if (isActive) return;
-        setPressed(true);
-        externalPressIn?.(event);
-      },
-      [isActive, externalPressIn]
-    );
+    const { getThemeColor, getColor } = useThemeColor();
 
     const handlePress = useCallback(
       (event: GestureResponderEvent) => {
@@ -68,60 +66,43 @@ export const Button = forwardRef<View, ButtonProps>(
     );
 
     const sizeClasses = {
-      sm: "py-2 px-3 rounded-md",
-      md: "py-3 px-4 rounded-lg",
-      lg: "py-4 px-6 rounded-xl",
+      sm: "my-2 mx-4",
+      md: "my-3 mx-5",
+      lg: "my-4 mx-6",
     };
 
-    const variantClasses = {
-      primary: "bg-blue-600 active:bg-blue-700",
-      secondary: "bg-gray-600 active:bg-gray-700",
-      outline: "border-2 border-blue-500 bg-white active:bg-blue-50",
-      danger: "bg-red-500 active:bg-red-600",
-      success: "bg-green-500 active:bg-green-600",
-    };
+    const grayColor = getColor("gray", "200");
+    const btnColor = getThemeColor(buttonColor) as ThemeColorName;
+    const defaultColor = getThemeColor("background") as ThemeColorName;
+    let backgroundColor = isActive ? darken(btnColor, 20) : btnColor;
+    let textColor = defaultColor;
 
-    const activeClasses = {
-      primary: "bg-blue-700 border-2 border-blue-300",
-      secondary: "bg-gray-700 border-2 border-gray-300",
-      outline: "bg-blue-100 border-2 border-blue-600",
-      danger: "bg-red-600 border-2 border-red-300",
-      success: "bg-green-600 border-2 border-green-300",
-    };
+    if (mode === "text") {
+      backgroundColor = "transparent";
+      textColor = isActive
+        ? (darken(btnColor, 20) as ThemeColorName)
+        : btnColor;
+    }
 
-    const textColor = {
-      primary: "text-white",
-      secondary: "text-white",
-      outline: isActive ? "text-blue-700" : "text-blue-600",
-      danger: "text-white",
-      success: "text-white",
-    }[variant];
+    if (mode === "outlined") {
+      backgroundColor = isActive ? grayColor : defaultColor;
+      textColor = btnColor;
+    }
 
     return (
-      <Pressable
+      <StyledButton
         ref={ref}
+        buttonColor={backgroundColor}
+        textColor={textColor}
+        mode={mode}
         disabled={disabled}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        onPress={handlePress}
-        style={style(
-          "flex-row items-center justify-center",
-          isActive ? activeClasses[variant] : variantClasses[variant],
-          sizeClasses[size],
-          pressed ? "opacity-50" : "",
-          disabled ? "bg-gray-400 opacity-80" : "",
-          className,
-          {
-            transitionProperty: "background-color, box-shadow, border-color",
-            transitionDuration: "200ms",
-          }
-        )}
+        onPress={!isActive ? handlePress : undefined}
+        labelClass={cn(sizeClasses[size], labelClass)}
+        className={cn("flex-row items-center justify-center", className)}
         {...rest}
       >
-        <Text className={`${textColor} font-semibold text-center`}>
-          {children}
-        </Text>
-      </Pressable>
+        {children}
+      </StyledButton>
     );
   }
 );

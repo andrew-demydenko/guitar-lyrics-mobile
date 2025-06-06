@@ -42,7 +42,7 @@ export default function ModalScreen() {
                   formRef.current.handleSubmit();
                 }
               }}
-              variant="primary"
+              buttonColor="primary"
               disabled={
                 methods.formState.isSubmitted && !methods.formState.isValid
               }

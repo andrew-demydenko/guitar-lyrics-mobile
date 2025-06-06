@@ -22,7 +22,7 @@ export const LineOutChord = ({
     <View className="flex-row items-center mr-2">
       {removeChord ? (
         <Button
-          variant="outline"
+          mode="outlined"
           onLongPress={handleRemoveChord}
           className="ml-1 py-0 px-1"
         >

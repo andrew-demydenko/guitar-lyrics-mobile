@@ -1,9 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useRouter } from "expo-router";
-import { TouchableOpacity, Platform } from "react-native";
+import { TouchableOpacity, Platform, StyleProp } from "react-native";
+import { useHeaderStyles } from "@/hooks/useHeaderStyles";
 
 export default function SongLayout() {
   const router = useRouter();
+  const headerStyles = useHeaderStyles();
 
   return (
     <Stack
@@ -15,6 +17,8 @@ export default function SongLayout() {
           padding: 10,
           paddingBottom: 0,
         },
+        headerStyle: headerStyles as StyleProp<{ backgroundColor?: string }>,
+        // headerStyle wait only backgroundColor
         headerLeft: () => (
           <TouchableOpacity
             className={Platform.select({

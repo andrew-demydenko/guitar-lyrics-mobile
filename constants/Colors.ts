@@ -1,30 +1,37 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
+import * as TWColors from "tailwindcss/colors";
 
-import TWColors from "tailwindcss/colors";
+const { lightBlue, warmGray, trueGray, coolGray, blueGray, ...filteredColors } =
+  TWColors;
 
 export const Colors = {
+  ...filteredColors,
   light: {
-    primary: TWColors.gray[800],
-    background: TWColors.neutral[50],
-    card: TWColors.stone[100],
-    text: TWColors.stone[800],
-    border: TWColors.gray[800],
-    notification: TWColors.gray[800],
-    active: TWColors.cyan[600],
-    secondary: TWColors.gray[400],
+    background: filteredColors.neutral[50],
+    card: filteredColors.stone[100],
+    text: filteredColors.stone[800],
+    border: filteredColors.gray[800],
+    notification: filteredColors.gray[800],
+    active: filteredColors.cyan[600],
+    primary: filteredColors.blue[500],
+    secondary: filteredColors.gray[400],
+    danger: filteredColors.red[400],
+    warning: filteredColors.amber[300],
+    success: filteredColors.green[500],
+    info: filteredColors.teal[600],
   },
 
   dark: {
-    primary: TWColors.neutral[100],
-    background: TWColors.gray[600],
-    card: TWColors.stone[900],
-    text: TWColors.neutral[50],
-    border: TWColors.neutral[200],
-    notification: TWColors.neutral[100],
-    active: TWColors.cyan[600],
-    secondary: TWColors.gray[400],
+    background: filteredColors.gray[600],
+    card: filteredColors.stone[900],
+    text: filteredColors.neutral[50],
+    border: filteredColors.neutral[200],
+    notification: filteredColors.neutral[100],
+    active: filteredColors.cyan[600],
+    primary: filteredColors.blue[500],
+    secondary: filteredColors.gray[400],
+    danger: filteredColors.red[400],
+    warning: filteredColors.amber[300],
+    success: filteredColors.green[500],
+    info: filteredColors.teal[600],
   },
 };

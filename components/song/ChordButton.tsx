@@ -28,12 +28,12 @@ export const ChordButton = ({
 
   return (
     <Button
-      variant="outline"
+      mode="outlined"
       onLongPress={handleLongPress}
       onPress={handlePress}
       isActive={isSelected}
       size={size}
-      className={cn("ml-1 px-1.4", {
+      className={cn("ml-1 px-0 min-w-0", {
         "py-0": !size,
       })}
     >

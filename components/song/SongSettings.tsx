@@ -1,7 +1,9 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { AntDesign } from "@expo/vector-icons";
 import React from "react";
+import { IconButton } from "react-native-paper";
 import { ModalActions } from "@/components/ModalActions";
 import { View, Text, Button } from "@/components/ui";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface SettingsProps {
   fontSize: number;
@@ -16,6 +18,9 @@ export const Settings = ({
   transposition,
   onTranspositionChange,
 }: SettingsProps) => {
+  const { getThemeColor } = useThemeColor();
+  const primaryColor = getThemeColor("primary");
+
   return (
     <ModalActions
       button={
@@ -27,42 +32,62 @@ export const Settings = ({
       <>
         <View className="flex-row justify-end items-center mb-3">
           <Text className="text-base mr-2">Size:</Text>
-          <Button
-            size="sm"
+          <IconButton
             disabled={fontSize <= 8}
+            containerColor={primaryColor}
+            mode="contained"
             onPress={() => setFontSize(Math.max(fontSize - 2, 8))}
-          >
-            -
-          </Button>
-          <Button className="mx-2" size="sm" onPress={() => setFontSize(14)}>
-            D
-          </Button>
-          <Button
-            size="sm"
+            icon={() => (
+              <AntDesign name="minus" size={24} className="text-white" />
+            )}
+          />
+
+          <IconButton
+            className="mx-2"
+            containerColor={primaryColor}
+            mode="contained"
+            onPress={() => setFontSize(14)}
+            icon={() => <Text className="my-2 text-center text-white">D</Text>}
+          />
+          <IconButton
+            mode="contained"
+            containerColor={primaryColor}
             disabled={fontSize >= 28}
             onPress={() => setFontSize(Math.min(fontSize + 2, 28))}
-          >
-            +
-          </Button>
+            icon={() => (
+              <AntDesign name="plus" size={24} className="text-white" />
+            )}
+          />
         </View>
 
         <View className="flex-row justify-end items-center">
           <Text className="text-base mr-2">Tone:</Text>
-          <Button
-            size="sm"
+
+          <IconButton
             disabled={transposition === -9}
+            containerColor={primaryColor}
+            mode="contained"
             onPress={() => onTranspositionChange(-1)}
-          >
-            -
-          </Button>
-          <Text className="w-[36px] mx-2 text-center">{transposition}</Text>
-          <Button
-            size="sm"
+            icon={() => (
+              <AntDesign name="minus" size={24} className="text-white" />
+            )}
+          />
+          <IconButton
+            mode="contained"
+            containerColor={primaryColor}
+            disabled={true}
+            icon={() => transposition}
+          />
+
+          <IconButton
+            mode="contained"
+            containerColor={primaryColor}
             disabled={transposition === 9}
             onPress={() => onTranspositionChange(1)}
-          >
-            +
-          </Button>
+            icon={() => (
+              <AntDesign name="plus" size={24} className="text-white" />
+            )}
+          />
         </View>
       </>
     </ModalActions>

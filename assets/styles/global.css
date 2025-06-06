@@ -10,3 +10,13 @@ body {
   line-height: 1.5;
   color: var(--color-text);
 }
+
+
+/* special class to stretch button for "react-native-paper" Button */
+.btn-full-width {
+  width: 100%;
+}
+
+.btn-full-width button {
+  width: 100%;
+}

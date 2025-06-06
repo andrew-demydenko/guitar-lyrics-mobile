@@ -67,33 +67,29 @@ export default function Login() {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-white px-4">
-      <View className="w-full max-w-md bg-white">
+    <View className="flex-1 items-center justify-center px-4">
+      <View className="w-full max-w-md">
         <Text className="text-2xl font-bold mb-6 text-center">Вход</Text>
 
-        <Input<LoginFormInputs>
+        <Input
           {...INPUTS.email}
           control={control}
           keyboardType="email-address"
           autoCapitalize="none"
         />
 
-        <Input<LoginFormInputs>
-          {...INPUTS.password}
-          control={control}
-          secureTextEntry
-        />
+        <Input {...INPUTS.password} control={control} secureTextEntry />
 
         <Button
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading}
-          className="mt-4"
+          className="btn-full-width"
         >
           Войти
         </Button>
 
         <Button
-          className="mt-2"
+          className="mt-2 btn-full-width"
           onPress={() => googleLogin()}
           disabled={isLoading}
         >

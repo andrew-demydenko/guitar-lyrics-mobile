@@ -7,21 +7,20 @@ import { FAB, IconButton } from "react-native-paper";
 import { HapticTab } from "@/components/HapticTab";
 import TabBarBackground from "@/components/TabBarBackground";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { useHeaderStyles } from "@/hooks/useHeaderStyles";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function TabLayout() {
-  const { getColor } = useThemeColor();
+  const { getThemeColor } = useThemeColor();
+  const headerStyles = useHeaderStyles();
 
   return (
     <View className="flex-1">
       <Tabs
         screenOptions={{
-          headerStyle: {
-            borderBottomColor: getColor("secondary"),
-            boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.3)",
-          },
-          tabBarActiveTintColor: getColor("active"),
-          tabBarInactiveTintColor: getColor("secondary"),
+          headerStyle: headerStyles as any,
+          tabBarActiveTintColor: getThemeColor("active"),
+          tabBarInactiveTintColor: getThemeColor("secondary"),
           tabBarButton: HapticTab,
           tabBarBackground: TabBarBackground,
           tabBarStyle: Platform.select({
@@ -29,7 +28,7 @@ export default function TabLayout() {
               position: "absolute",
             },
             default: {
-              borderTopColor: getColor("secondary"),
+              borderTopColor: getThemeColor("secondary"),
               boxShadow: "0 0 10px 2px rgba(0, 0, 0, 0.3)",
             },
           }),

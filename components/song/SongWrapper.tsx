@@ -74,7 +74,8 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
           <Button
             size="sm"
             onPress={scrolling ? stopScrolling : startScrolling}
-            className="flex-row items-center w-24"
+            className="flex-row items-center"
+            labelClass="w-16"
           >
             <AntDesign
               name={scrolling ? "pause" : "caretright"}
@@ -86,7 +87,7 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
           <Button
             key={speedMultiplier}
             size="sm"
-            variant={"primary"}
+            buttonColor="primary"
             onPress={() =>
               setSpeedMultiplier(speedMultiplier < 3 ? speedMultiplier + 1 : 1)
             }

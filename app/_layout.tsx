@@ -11,7 +11,6 @@ import "@/assets/styles/global.css";
 import { View } from "@/components/ui";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-
 const queryClient = new QueryClient();
 
 // Keep the splash screen visible while we fetch resources
@@ -24,9 +23,10 @@ SplashScreen.setOptions({
 });
 
 export default function RootLayout() {
-  // const { width } = useWindowDimensions();
   const [appIsReady, setAppIsReady] = useState(false);
+
   const [loaded] = useFonts({
+    MaterialDesignIcons: require("../assets/fonts/MaterialDesignIcons.ttf"),
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 

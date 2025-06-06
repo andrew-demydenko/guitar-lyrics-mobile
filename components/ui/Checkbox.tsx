@@ -1,6 +1,8 @@
 import React from "react";
 import { useController, Control, FieldValues, Path } from "react-hook-form";
 import { Pressable } from "react-native";
+import { Checkbox as RNCheckbox } from "react-native-paper";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { Text } from "./Text";
 import { View } from "./View";
 
@@ -15,22 +17,33 @@ export const Checkbox = <T extends FieldValues>({
   label,
   control,
 }: CheckboxProps<T>) => {
-  const { field } = useController({
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
     control,
     name,
   });
 
+  const { getThemeColor } = useThemeColor();
+  const primaryColor = getThemeColor("primary");
+
   return (
-    <Pressable
-      onPress={() => field.onChange(!field.value)}
-      className="flex-row items-center mb-4"
-    >
-      <View
-        className={`w-5 h-5 rounded-md border mr-2 flex items-center justify-center ${field.value ? "bg-blue-500 border-blue-500" : "border-gray-300"}`}
+    <View className="mb-4">
+      <Pressable
+        onPress={() => field.onChange(!field.value)}
+        className="flex-row align-center"
       >
-        {field.value && <Text className="text-white">✓</Text>}
-      </View>
-      <Text className="text-sm font-medium text-gray-700">{label}</Text>
-    </Pressable>
+        <RNCheckbox
+          color={primaryColor}
+          onPress={() => field.onChange(!field.value)}
+          status={field.value ? "checked" : "unchecked"}
+        />
+        <Text className="self-center">{label}</Text>
+      </Pressable>
+      {error && (
+        <Text className="text-red-500 text-xs mt-1">{error.message}</Text>
+      )}
+    </View>
   );
 };

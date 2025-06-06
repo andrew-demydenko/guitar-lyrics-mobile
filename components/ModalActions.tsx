@@ -14,13 +14,13 @@ interface ModalActionsProps {
   backdrop?: string;
   button: React.ReactElement<ButtonProps>;
   children: React.ReactNode;
-  buttonProps?: PressableProps;
+  buttonColor?: PressableProps;
 }
 
 const minModalWidth = 180;
 
 export const ModalActions = ({
-  backdrop = "bg-black/50",
+  backdrop = "bg-black/30",
   button,
   children,
 }: ModalActionsProps) => {
@@ -79,7 +79,9 @@ export const ModalActions = ({
       <Animated.View style={animatedButtonStyle}>
         {React.cloneElement(button, {
           onPress: () => setIsOpen(true),
-          variant: isOpen ? "primary" : button.props.variant || "secondary",
+          buttonColor: isOpen
+            ? "primary"
+            : button.props.buttonColor || "secondary",
         })}
       </Animated.View>
 

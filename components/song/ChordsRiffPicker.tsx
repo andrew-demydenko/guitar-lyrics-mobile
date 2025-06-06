@@ -38,7 +38,7 @@ export const ChordRiffPicker = ({
   return (
     <View>
       <Button
-        variant="secondary"
+        buttonColor="secondary"
         className="px-2 py-1"
         size="sm"
         onPress={() => setIsModalOpen(true)}
@@ -76,7 +76,7 @@ export const ChordRiffPicker = ({
                     onPress={() =>
                       setSelectedChords(selectedChords.slice(0, -1))
                     }
-                    variant="danger"
+                    buttonColor="danger"
                     size="sm"
                   >
                     <FontAwesome5 name="backspace" size={14} color="white" />

@@ -31,7 +31,11 @@ export default function ProfileDrawer() {
         </ScrollView>
 
         {user && (
-          <Button onPress={signOut} variant="danger">
+          <Button
+            className="btn-full-width"
+            onPress={signOut}
+            buttonColor="danger"
+          >
             <Text className="text-white font-medium">Logout</Text>
           </Button>
         )}

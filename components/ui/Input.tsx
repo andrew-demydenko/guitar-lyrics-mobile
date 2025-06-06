@@ -1,10 +1,25 @@
+import { cssInterop } from "nativewind";
 import React from "react";
 import { useController, Control, FieldValues, Path } from "react-hook-form";
-import { TextInput, KeyboardTypeOptions } from "react-native";
+import { KeyboardTypeOptions } from "react-native";
+import { TextInput, TextInputProps } from "react-native-paper";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { Text } from "./Text";
 import { View } from "./View";
 
-interface InputProps<T extends FieldValues> {
+const StyledTextInput = cssInterop(TextInput, {
+  className: {
+    target: "style",
+  },
+  contentClass: {
+    target: "contentStyle",
+  },
+  outlineClass: {
+    target: "outlineStyle",
+  },
+});
+
+interface InputProps<T extends FieldValues> extends TextInputProps {
   name: Path<T>;
   label: string;
   required?: boolean;
@@ -23,7 +38,11 @@ export const Input = <T extends FieldValues>({
   rules,
   placeholder,
   control,
+  ...rest
 }: InputProps<T>) => {
+  const { getThemeColor } = useThemeColor();
+  const primaryColor = getThemeColor("primary");
+
   const {
     field,
     fieldState: { error },
@@ -38,14 +57,17 @@ export const Input = <T extends FieldValues>({
 
   return (
     <View className="mb-4">
-      <Text className="text-sm font-medium text-gray-700 mb-1">
-        {label} {required && <Text className="text-red-500">*</Text>}
-      </Text>
-      <TextInput
-        className={`border rounded-md p-2 placeholder:text-gray-500 ${error ? "border-red-500" : "border-gray-300"}`}
+      <StyledTextInput
+        outlineClass="!bg-background"
+        mode="outlined"
+        label={label}
+        outlineColor={primaryColor}
+        activeOutlineColor={primaryColor}
+        error={!!error}
         value={field.value}
         onChangeText={field.onChange}
         placeholder={placeholder}
+        {...rest}
       />
       {error && (
         <Text className="text-red-500 text-xs mt-1">{error.message}</Text>

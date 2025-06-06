@@ -1,6 +1,7 @@
 import React from "react";
 import { useController, Control, FieldValues, Path } from "react-hook-form";
-import { TextInput } from "react-native";
+import { TextInput } from "react-native-paper";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { Text } from "./Text";
 import { View } from "./View";
 
@@ -21,8 +22,11 @@ export const Textarea = <T extends FieldValues>({
   rules,
   placeholder,
   control,
-  className,
+  ...rest
 }: TextareaProps<T>) => {
+  const { getColor } = useThemeColor();
+  const primaryColor = getColor("primary");
+
   const {
     field,
     fieldState: { error },
@@ -37,16 +41,17 @@ export const Textarea = <T extends FieldValues>({
 
   return (
     <View className="mb-4">
-      <Text className="text-sm font-medium text-gray-700 mb-1">
-        {label} {required && <Text className="text-red-500">*</Text>}
-      </Text>
       <TextInput
-        className={`border rounded-md p-2 placeholder:text-gray-500 ${error ? "border-red-500" : "border-gray-300"} ${className}`}
+        label={label}
+        mode="outlined"
+        error={!!error}
         value={field.value}
         onChangeText={field.onChange}
         placeholder={placeholder}
-        multiline
-        textAlignVertical="top"
+        outlineColor={primaryColor}
+        activeOutlineColor={primaryColor}
+        multiline={true}
+        {...rest}
       />
       {error && (
         <Text className="text-red-500 text-xs mt-1">{error.message}</Text>

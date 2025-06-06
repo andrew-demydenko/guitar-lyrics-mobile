@@ -56,7 +56,9 @@ export const SongView = ({
               transposedChords={transposedChords}
               fontSize={fontSize}
               editable={editable}
-              {...props}
+              handleAddChord={props.handleAddChord}
+              handleRemoveChord={props.handleRemoveChord}
+              handleChordsRiff={props.handleChordsRiff}
             />
           );
         })}
