@@ -18,7 +18,7 @@ export default function TabLayout() {
     <View className="flex-1">
       <Tabs
         screenOptions={{
-          headerStyle: headerStyles as any,
+          headerStyle: headerStyles,
           tabBarActiveTintColor: getThemeColor("active"),
           tabBarInactiveTintColor: getThemeColor("secondary"),
           tabBarButton: HapticTab,

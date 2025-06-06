@@ -12,13 +12,24 @@ export default function ModalLayout() {
         presentation: "modal",
         headerTransparent: false,
         headerShadowVisible: false,
-        headerStyle: headerStyles as any,
+        headerStyle: headerStyles,
         contentStyle: {
           padding: 10,
           paddingBottom: 0,
         },
         headerLeft: () => <BackButton />,
       }}
-    />
+    >
+      <Stack.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          presentation: "transparentModal",
+          gestureEnabled: true,
+          gestureDirection: "horizontal",
+          animation: "slide_from_bottom",
+        }}
+      />
+    </Stack>
   );
 }

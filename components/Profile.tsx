@@ -13,7 +13,6 @@ export default function ProfileDrawer() {
   return (
     <View className="flex-1 p-6">
       <View className="items-center mb-8">
-        <View className="w-24 h-24 rounded-ful mb-4" />
         <Text className="text-xl font-bold text-gray-900 dark:text-white">
           {user?.name}
         </Text>

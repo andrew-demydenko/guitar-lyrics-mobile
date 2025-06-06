@@ -15,7 +15,7 @@ export default function SongLayout() {
           padding: 10,
           paddingBottom: 0,
         },
-        headerStyle: headerStyles as any,
+        headerStyle: headerStyles,
         headerLeft: () => <BackButton />,
       }}
     >
