@@ -1,4 +1,4 @@
-import { useColorScheme } from "react-native";
+import { useColorScheme } from "nativewind";
 import { Colors } from "@/constants/Colors";
 
 export type ThemeColorName =
@@ -18,7 +18,7 @@ export type ThemeColorName =
 type Theme = "light" | "dark";
 
 export function useThemeColor() {
-  const theme: Theme = useColorScheme() || "light";
+  const { colorScheme = "light" } = useColorScheme();
 
   const getColor = (colorName: keyof typeof Colors, shade?: string): string => {
     const color = Colors[colorName];
@@ -33,7 +33,7 @@ export function useThemeColor() {
   const getThemeColor = (
     colorName: ThemeColorName
   ): (typeof Colors)[Theme][ThemeColorName] => {
-    return Colors[theme][colorName];
+    return Colors[colorScheme][colorName];
   };
 
   return {

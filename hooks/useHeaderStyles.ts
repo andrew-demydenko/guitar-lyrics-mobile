@@ -4,7 +4,7 @@ import { useThemeColor } from "./useThemeColor";
 export const useHeaderStyles = () => {
   const { getThemeColor } = useThemeColor();
   const borderColor = getThemeColor("secondary");
-  const backgroundColor = getThemeColor("background");
+  const backgroundColor = getThemeColor("card");
 
   if (Platform.OS === "web") {
     return {

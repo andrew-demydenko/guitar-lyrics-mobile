@@ -39,6 +39,7 @@ yarn-error.*
 
 #ide
 .vscode
+.github
 
 app-example
 .env

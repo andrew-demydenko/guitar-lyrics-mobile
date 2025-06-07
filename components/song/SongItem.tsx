@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { cssInterop } from "nativewind";
 import React from "react";
 import { Card } from "react-native-paper";
 import { style } from "twrnc";
@@ -8,10 +9,14 @@ interface SongItemProps {
   song: Song;
 }
 
+const StyledCard = cssInterop(Card, {
+  className: "style",
+});
+
 export const SongItem = ({ song }: SongItemProps) => {
   return (
-    <Card
-      style={style("mb-4", "bg-white", "dark:bg-gray-800")}
+    <StyledCard
+      className="mb-4 !bg-card"
       onPressIn={() => router.push(`/song/${song.id}`)}
     >
       <Card.Title
@@ -27,6 +32,6 @@ export const SongItem = ({ song }: SongItemProps) => {
           />
         )}
       />
-    </Card>
+    </StyledCard>
   );
 };

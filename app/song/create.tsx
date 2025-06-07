@@ -42,7 +42,7 @@ export default function ModalScreen() {
           ),
         }}
       />
-      <View className="flex-1 bg-white dark:bg-black p-4 shadow-md">
+      <View className="flex-1 p-4 shadow-md">
         <FormProvider {...methods}>
           <SongForm ref={formRef} />
         </FormProvider>
