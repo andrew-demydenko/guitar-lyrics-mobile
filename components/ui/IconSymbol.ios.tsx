@@ -1,6 +1,6 @@
 import { SymbolView, SymbolViewProps, SymbolWeight } from "expo-symbols";
 import { StyleProp, ViewStyle } from "react-native";
-import { useInverColor } from "./IconSymbol";
+import { useInvertColor } from "@/hooks/useInvertColor";
 
 export function IconSymbol({
   name,
@@ -17,7 +17,7 @@ export function IconSymbol({
   weight?: SymbolWeight;
   invertColor?: boolean;
 }) {
-  const finalColor = useInverColor(invertColor, color);
+  const finalColor = useInvertColor(invertColor, color);
 
   return (
     <SymbolView

@@ -16,6 +16,37 @@ export const useDebounce = <T>(value: T, delay: number): T => {
   return debouncedValue;
 };
 
+export function throttle<T extends (...args: any[]) => void>(
+  func: T,
+  limit: number
+): T {
+  let lastFunc: number | null = null;
+  let lastRan: number | null = null;
+
+  return function (this: any, ...args: Parameters<T>) {
+    const context = this;
+    const now = Date.now();
+
+    if (!lastRan) {
+      func.apply(context, args);
+      lastRan = now;
+    } else {
+      if (lastFunc) {
+        clearTimeout(lastFunc);
+      }
+      lastFunc = setTimeout(
+        () => {
+          if (now - (lastRan ?? 0) >= limit) {
+            func.apply(context, args);
+            lastRan = Date.now();
+          }
+        },
+        limit - (now - lastRan)
+      );
+    }
+  } as T;
+}
+
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
   hex = hex.replace(/^#/, "");
 

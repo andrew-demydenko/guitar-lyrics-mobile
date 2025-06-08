@@ -2,10 +2,9 @@
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { SymbolWeight } from "expo-symbols";
-import { useColorScheme } from "nativewind";
 import { ComponentProps } from "react";
 import { OpaqueColorValue, type StyleProp, type TextStyle } from "react-native";
-import { useThemeColor } from "@/hooks/useThemeColor";
+import { useInvertColor } from "@/hooks/useInvertColor";
 
 type MaterialIconName = ComponentProps<typeof MaterialIcons>["name"];
 type IconMapping = Record<
@@ -59,32 +58,6 @@ const MAPPING = {
  * Icon `name`s are based on SF Symbols and require manual mapping to Material Icons.
  */
 
-export const useInverColor = (
-  invertColor: boolean,
-  color: string | OpaqueColorValue
-) => {
-  const { getThemeColor } = useThemeColor();
-  const { colorScheme } = useColorScheme();
-  let finalColor = color;
-
-  if (invertColor && colorScheme === "dark" && typeof color === "string") {
-    const textColor = getThemeColor("text");
-    const invertedTextColor = getThemeColor("invertedText");
-    const colorMap: Record<string, string> = {
-      invertedTextColor: textColor,
-      textColor: invertedTextColor,
-      black: "white",
-      white: "black",
-    };
-
-    if (colorMap[color]) {
-      finalColor = colorMap[color];
-    }
-  }
-
-  return finalColor;
-};
-
 export function IconSymbol({
   name,
   size = 24,
@@ -99,7 +72,7 @@ export function IconSymbol({
   weight?: SymbolWeight;
   invertColor?: boolean;
 }) {
-  const finalColor = useInverColor(invertColor, color);
+  const finalColor = useInvertColor(invertColor, color);
 
   return (
     <MaterialIcons

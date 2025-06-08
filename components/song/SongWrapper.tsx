@@ -1,59 +1,94 @@
-import React, { useState, useRef } from "react";
-import { ScrollView } from "react-native";
+import React, { useState, useRef, useCallback, useEffect } from "react";
+import {
+  ScrollView,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Platform,
+} from "react-native";
 import { View, Button } from "@/components/ui";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { throttle } from "@/lib/common";
 import { Settings } from "./SongSettings";
 
 interface ScrollWrapperProps {
   children: (props: { toneKey: number; fontSize: number }) => React.ReactNode;
 }
 
-const SCROLL_DELAY = 16; // ~60 FPS
+const SCROLL_STEP_BASE = 0.5;
 
 export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
-  const [scrolling, setScrolling] = useState(false);
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const [fontSize, setFontSize] = useState(14);
   const [contentHeight, setContentHeight] = useState(0);
   const [containerHeight, setContainerHeight] = useState(0);
-  const scrollViewRef = useRef<ScrollView>(null);
-  const currentScrollRef = useRef(0);
-  const scrollIntervalRef = useRef<number | null>(null);
   const [transposition, setTransposition] = useState(0);
+  const [scrolling, setScrolling] = useState(false); // UI state
 
-  const startScrolling = () => {
+  const scrollingRef = useRef(false); // logic state
+  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollYRef = useRef(0);
+  const animationFrameRef = useRef<number | null>(null);
+  const isUserScrollingRef = useRef(false);
+  const resumeScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
+
+  const maxScroll = contentHeight - containerHeight;
+
+  const animateScroll = useCallback(() => {
+    if (!scrollingRef.current) return;
+
+    scrollYRef.current = Math.min(
+      scrollYRef.current + SCROLL_STEP_BASE * speedMultiplier,
+      maxScroll
+    );
+
+    scrollViewRef.current?.scrollTo({
+      y: scrollYRef.current,
+      animated: false,
+    });
+
+    if (scrollYRef.current >= maxScroll) {
+      stopAutoScroll();
+      return;
+    }
+
+    animationFrameRef.current = requestAnimationFrame(animateScroll);
+  }, [maxScroll, speedMultiplier]);
+
+  useEffect(() => {
+    if (scrollingRef.current) {
+      cancelAnimationFrame(animationFrameRef.current!);
+      animationFrameRef.current = requestAnimationFrame(animateScroll);
+    }
+  }, [speedMultiplier, scrollingRef, animateScroll]);
+
+  const startAutoScroll = () => {
     if (scrolling || contentHeight <= containerHeight) return;
 
     setScrolling(true);
-    const maxScroll = contentHeight - containerHeight;
-
-    scrollIntervalRef.current = setInterval(() => {
-      currentScrollRef.current = Math.min(
-        currentScrollRef.current + 0.5 * speedMultiplier,
-        maxScroll
-      );
-
-      scrollViewRef.current?.scrollTo({
-        y: currentScrollRef.current,
-        animated: false,
-      });
-
-      if (currentScrollRef.current >= maxScroll) {
-        stopScrolling();
-      }
-    }, SCROLL_DELAY);
+    scrollingRef.current = true;
+    animationFrameRef.current = requestAnimationFrame(animateScroll);
   };
 
-  const stopScrolling = () => {
+  const stopAutoScroll = () => {
     setScrolling(false);
-    if (scrollIntervalRef.current) {
-      clearInterval(scrollIntervalRef.current);
-      scrollIntervalRef.current = null;
+    scrollingRef.current = false;
+
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
     }
   };
 
-  const handleContentSizeChange = (_: number, h: number) => {
-    setContentHeight(h);
+  const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const y = e.nativeEvent.contentOffset.y;
+
+    scrollYRef.current = y;
+  };
+
+  const handleContentSizeChange = (_: number, height: number) => {
+    setContentHeight(height);
   };
 
   const handleLayout = (e: any) => {
@@ -67,9 +102,41 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
     }
   };
 
+  const stopAutoScrollTemporarily = () => {
+    if (!Math.floor(scrollYRef.current)) return;
+    isUserScrollingRef.current = true;
+
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+
+    if (Platform.OS === "web" && scrollingRef.current) {
+      if (resumeScrollTimeoutRef.current) {
+        clearTimeout(resumeScrollTimeoutRef.current);
+      }
+      resumeScrollTimeoutRef.current = setTimeout(() => {
+        setTimeout(() => {
+          resumeScroll();
+          resumeScrollTimeoutRef.current = null;
+        });
+      }, 500);
+    }
+  };
+
+  const resumeScroll = () => {
+    if (isUserScrollingRef.current) {
+      isUserScrollingRef.current = false;
+
+      if (scrollingRef.current) {
+        animationFrameRef.current = requestAnimationFrame(animateScroll);
+      }
+    }
+  };
+
   return (
     <View className="flex-1">
-      <View className="flex-row flex-wrap justify-between mb-3 z-auto">
+      <View className="flex-row flex-wrap justify-between mt-1 mb-3 z-auto">
         <View className="flex-row mb-2 gap-4">
           <Button
             icon={() => (
@@ -80,7 +147,7 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
               />
             )}
             size="sm"
-            onPress={scrolling ? stopScrolling : startScrolling}
+            onPress={scrolling ? stopAutoScroll : startAutoScroll}
             className="flex-row items-center"
             labelClass="w-14"
           >
@@ -88,7 +155,6 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
           </Button>
           <Button
             size="sm"
-            key={speedMultiplier}
             buttonColor="primary"
             onPress={() =>
               setSpeedMultiplier(speedMultiplier < 3 ? speedMultiplier + 1 : 1)
@@ -111,12 +177,17 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
         className="flex-1 border border-gray-300 mb-4"
         onContentSizeChange={handleContentSizeChange}
         onLayout={handleLayout}
+        onScroll={handleScroll}
+        {...(Platform.OS === "web"
+          ? { onWheel: throttle(stopAutoScrollTemporarily, 500) }
+          : {
+              onTouchStart: stopAutoScrollTemporarily,
+              onTouchEnd: resumeScroll,
+            })}
         scrollEventThrottle={16}
       >
-        <View>
-          <View className="space-y-2">
-            {children({ toneKey: transposition, fontSize })}
-          </View>
+        <View className="space-y-2">
+          {children({ toneKey: transposition, fontSize })}
         </View>
       </ScrollView>
     </View>
