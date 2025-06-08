@@ -24,11 +24,7 @@ export const Settings = ({
   return (
     <ModalActions
       button={
-        <Button
-          size="sm"
-          className="flex-row items-center z-10"
-          labelClass="flex items-center justify-center w-10"
-        >
+        <Button size="sm" labelClass="px-2 flex justify-center w-10">
           <IconSymbol name="gearshape.fill" size={20} color="white" />
         </Button>
       }
