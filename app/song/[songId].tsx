@@ -1,13 +1,17 @@
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useLocalSearchParams, useNavigation, router } from "expo-router";
 import React, { useEffect } from "react";
 import { Platform, ActivityIndicator } from "react-native";
+import { IconButton } from "react-native-paper";
 import { SongView } from "@/components/song/SongView";
 import { ScrollWrapper } from "@/components/song/SongWrapper";
-import { View, Button, BackButton } from "@/components/ui";
+import { View, BackButton, IconSymbol } from "@/components/ui";
 import { useSongById } from "@/hooks/data";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function SongsPage() {
   const { songId } = useLocalSearchParams();
+  const { getThemeColor } = useThemeColor();
+  const primaryColor = getThemeColor("primary");
   const navigation = useNavigation();
   const { data: song, isLoading } = useSongById(songId as string);
 
@@ -16,19 +20,23 @@ export default function SongsPage() {
       title: song ? `${song.name} - ${song.author}` : "Song",
       headerLeft: () => <BackButton />,
       headerRight: () => (
-        <Button
+        <View
           className={Platform.select({
             ios: "mr-0",
             default: "mr-4",
           })}
-          size="sm"
-          href={`/song/edit/${songId}`}
         >
-          Edit Song
-        </Button>
+          <IconButton
+            onPress={() => router.push(`/song/edit/${songId}`)}
+            containerColor={primaryColor}
+            mode="contained"
+            size={24}
+            icon={() => <IconSymbol name="pencil" size={24} color="white" />}
+          />
+        </View>
       ),
     });
-  }, [navigation, songId, song]);
+  }, [navigation, songId, song, primaryColor]);
 
   if (isLoading) {
     return (

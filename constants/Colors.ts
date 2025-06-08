@@ -59,6 +59,7 @@ export const Colors = {
     rose,
   },
   light: {
+    invertText: neutral[50],
     background: neutral[50],
     card: stone[100],
     text: stone[800],
@@ -74,6 +75,7 @@ export const Colors = {
   },
 
   dark: {
+    invertText: stone[800],
     background: gray[600],
     card: stone[900],
     text: neutral[50],

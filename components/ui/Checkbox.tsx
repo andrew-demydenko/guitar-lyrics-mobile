@@ -36,6 +36,7 @@ export const Checkbox = <T extends FieldValues>({
       >
         <RNCheckbox
           color={primaryColor}
+          uncheckedColor={primaryColor}
           onPress={() => field.onChange(!field.value)}
           status={field.value ? "checked" : "unchecked"}
         />
