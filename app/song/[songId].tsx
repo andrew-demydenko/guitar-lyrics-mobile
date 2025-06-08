@@ -23,15 +23,13 @@ export default function SongsPage() {
         <View
           className={Platform.select({
             ios: "mr-0",
-            default: "mr-4",
+            default: "mr-3",
           })}
         >
           <IconButton
             onPress={() => router.push(`/song/edit/${songId}`)}
-            containerColor={primaryColor}
-            mode="contained"
             size={24}
-            icon={() => <IconSymbol name="pencil" size={24} color="white" />}
+            icon={() => <IconSymbol name="pencil" size={24} color="black" />}
           />
         </View>
       ),

@@ -59,7 +59,7 @@ export const ChordRiffPicker = ({
                 onPress={() => setIsModalOpen(false)}
                 className="p-2"
               >
-                <IconSymbol name="xmark" size={28} color="white" />
+                <IconSymbol name="xmark" size={28} color="black" />
               </TouchableOpacity>
             </View>
 

@@ -5,6 +5,7 @@ export type ThemeColorName =
   | "background"
   | "card"
   | "text"
+  | "invertedText"
   | "border"
   | "notification"
   | "active"
