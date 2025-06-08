@@ -45,7 +45,7 @@ export const SongView = ({
   }
 
   return (
-    <View className="mt-6 ml-4 relative text-text">
+    <View className="m-4 relative text-text">
       <ScrollView>
         {textByLines.map((line, lineIndex) => {
           return (

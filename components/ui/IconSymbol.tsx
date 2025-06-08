@@ -12,8 +12,8 @@ type IconMapping = Record<
   | "chevron.left.forwardslash.chevron.right"
   | "chevron.right"
   | "music.note.list"
-  | "search"
-  | "favorite",
+  | "magnifyingglass"
+  | "heart.fill",
   MaterialIconName
 >;
 type IconSymbolName = keyof IconMapping;
@@ -29,8 +29,8 @@ const MAPPING = {
   "chevron.left.forwardslash.chevron.right": "code",
   "chevron.right": "chevron-right",
   "music.note.list": "library-music",
-  search: "search",
-  favorite: "favorite",
+  magnifyingglass: "search",
+  "heart.fill": "favorite",
 } as IconMapping;
 
 /**

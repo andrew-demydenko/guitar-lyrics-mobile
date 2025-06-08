@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Platform, ActivityIndicator } from "react-native";
 import { SongView } from "@/components/song/SongView";
 import { ScrollWrapper } from "@/components/song/SongWrapper";
-import { View, Button } from "@/components/ui";
+import { View, Button, BackButton } from "@/components/ui";
 import { useSongById } from "@/hooks/data";
 
 export default function SongsPage() {
@@ -14,6 +14,7 @@ export default function SongsPage() {
   useEffect(() => {
     navigation.setOptions({
       title: song ? `${song.name} - ${song.author}` : "Song",
+      headerLeft: () => <BackButton />,
       headerRight: () => (
         <Button
           className={Platform.select({
@@ -38,7 +39,7 @@ export default function SongsPage() {
   }
 
   return (
-    <View className="flex-1 p-4">
+    <View className="flex-1 p-2">
       {song && (
         <ScrollWrapper>
           {({ toneKey, fontSize }) => (

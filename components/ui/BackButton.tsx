@@ -38,7 +38,7 @@ export function BackButton({
       className={`${marginClassName} ${className}`.trim()}
       onPress={handlePress}
     >
-      <Ionicons name="chevron-back-outline" className="text-text" size={size} />
+      <Ionicons name="chevron-back-outline" size={size} />
     </TouchableOpacity>
   );
 }

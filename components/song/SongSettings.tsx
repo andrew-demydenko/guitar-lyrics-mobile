@@ -24,8 +24,12 @@ export const Settings = ({
   return (
     <ModalActions
       button={
-        <Button size="sm" className="flex-row items-center z-10">
-          <AntDesign name="setting" size={16} />
+        <Button
+          size="sm"
+          className="flex-row items-center z-10"
+          labelClass="flex items-center justify-center w-10"
+        >
+          <AntDesign name="setting" size={20} />
         </Button>
       }
     >
@@ -38,7 +42,7 @@ export const Settings = ({
             mode="contained"
             onPress={() => setFontSize(Math.max(fontSize - 2, 8))}
             icon={() => (
-              <AntDesign name="minus" size={24} className="text-white" />
+              <AntDesign name="minus" size={24} className="!text-white" />
             )}
           />
 
@@ -47,7 +51,7 @@ export const Settings = ({
             containerColor={primaryColor}
             mode="contained"
             onPress={() => setFontSize(14)}
-            icon={() => <Text className="my-2 text-center text-white">D</Text>}
+            icon={() => <Text className="my-2 text-center !text-white">D</Text>}
           />
           <IconButton
             mode="contained"
@@ -55,7 +59,7 @@ export const Settings = ({
             disabled={fontSize >= 28}
             onPress={() => setFontSize(Math.min(fontSize + 2, 28))}
             icon={() => (
-              <AntDesign name="plus" size={24} className="text-white" />
+              <AntDesign name="plus" size={24} className="!text-white" />
             )}
           />
         </View>
@@ -69,14 +73,18 @@ export const Settings = ({
             mode="contained"
             onPress={() => onTranspositionChange(-1)}
             icon={() => (
-              <AntDesign name="minus" size={24} className="text-white" />
+              <AntDesign name="minus" size={24} className="!text-white" />
             )}
           />
           <IconButton
             mode="contained"
             containerColor={primaryColor}
             disabled={true}
-            icon={() => transposition}
+            icon={() => (
+              <Text className="my-2 text-center !text-white">
+                {transposition}
+              </Text>
+            )}
           />
 
           <IconButton
@@ -85,7 +93,7 @@ export const Settings = ({
             disabled={transposition === 9}
             onPress={() => onTranspositionChange(1)}
             icon={() => (
-              <AntDesign name="plus" size={24} className="text-white" />
+              <AntDesign name="plus" size={24} className="!text-white" />
             )}
           />
         </View>

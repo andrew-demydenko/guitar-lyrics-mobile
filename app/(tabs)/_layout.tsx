@@ -84,7 +84,7 @@ export default function TabLayout() {
             title: "Search",
             headerTitle: "Search Songs",
             tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name="search" color={color} />
+              <IconSymbol size={28} name="magnifyingglass" color={color} />
             ),
           }}
         />
@@ -94,7 +94,7 @@ export default function TabLayout() {
             title: "Favorites",
             headerTitle: "Favorite Songs",
             tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name="favorite" color={color} />
+              <IconSymbol size={28} name="heart.fill" color={color} />
             ),
           }}
         />
@@ -102,19 +102,19 @@ export default function TabLayout() {
 
       <FAB
         icon={() => (
-          <MaterialIcons name="add" size={34} className="text-white" />
+          <MaterialIcons name="add" size={34} className="!text-white" />
         )}
         className={cn(
           "absolute",
           "shadow-lg",
           Platform.select({
-            ios: "bottom-24",
+            ios: "bottom-14",
             android: "bottom-12",
             default: "bottom-16",
           }),
-          "right-4",
+          "right-3",
           "bg-red-400",
-          "rounded-full"
+          "!rounded-full"
         )}
         onPress={() => router.push("/song/create")}
         size="large"
