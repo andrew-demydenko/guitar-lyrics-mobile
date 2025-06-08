@@ -1,8 +1,8 @@
-import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Modal, TextInput, Switch, TouchableOpacity } from "react-native";
 import Toast from "react-native-toast-message";
 import { View, Text, Button } from "@/components/ui";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import { CHORDS } from "@/constants/Chords";
 import { ChordPositions } from "@/entities/song";
 import { isServiceLine, isChordsLine, addExtraSpaceOnRepeat } from "./utils";
@@ -120,7 +120,7 @@ export const ImportSong: React.FC<ImportSongProps> = ({ onImport }) => {
                 onPress={() => setIsModalOpen(false)}
                 className="p-2"
               >
-                <Ionicons name="close" size={28} color="#000" />
+                <IconSymbol name="xmark" size={28} color="black" />
               </TouchableOpacity>
             </View>
 

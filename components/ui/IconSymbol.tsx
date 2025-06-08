@@ -13,7 +13,16 @@ type IconMapping = Record<
   | "chevron.right"
   | "music.note.list"
   | "magnifyingglass"
-  | "heart.fill",
+  | "heart.fill"
+  | "plus"
+  | "minus"
+  | "gearshape.fill"
+  | "xmark"
+  | "backspace"
+  | "pause"
+  | "play.fill"
+  | "chevron.backward"
+  | "pencil",
   MaterialIconName
 >;
 type IconSymbolName = keyof IconMapping;
@@ -31,6 +40,15 @@ const MAPPING = {
   "music.note.list": "library-music",
   magnifyingglass: "search",
   "heart.fill": "favorite",
+  plus: "add",
+  minus: "remove",
+  "gearshape.fill": "settings",
+  xmark: "close",
+  backspace: "backspace",
+  pause: "pause",
+  "play.fill": "play-arrow",
+  "chevron.backward": "arrow-back",
+  pencil: "edit",
 } as IconMapping;
 
 /**

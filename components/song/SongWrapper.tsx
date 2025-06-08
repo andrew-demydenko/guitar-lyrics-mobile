@@ -1,7 +1,7 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState, useRef } from "react";
 import { ScrollView } from "react-native";
 import { View, Button } from "@/components/ui";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import { Settings } from "./SongSettings";
 
 interface ScrollWrapperProps {
@@ -73,9 +73,9 @@ export const ScrollWrapper: React.FC<ScrollWrapperProps> = ({ children }) => {
         <View className="flex-row mb-2 gap-4">
           <Button
             icon={() => (
-              <AntDesign
-                name={scrolling ? "pause" : "caretright"}
-                className="mr-1 !text-white"
+              <IconSymbol
+                name={scrolling ? "pause" : "play.fill"}
+                color="white"
                 size={14}
               />
             )}

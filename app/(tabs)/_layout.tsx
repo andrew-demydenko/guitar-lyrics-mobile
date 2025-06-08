@@ -1,4 +1,4 @@
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import cn from "classnames";
 import { Tabs, router } from "expo-router";
 import React from "react";
@@ -101,9 +101,7 @@ export default function TabLayout() {
       </Tabs>
 
       <FAB
-        icon={() => (
-          <MaterialIcons name="add" size={34} className="!text-white" />
-        )}
+        icon={() => <IconSymbol name="plus" size={34} color="white" />}
         className={cn(
           "absolute",
           "shadow-lg",

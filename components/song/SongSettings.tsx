@@ -1,8 +1,8 @@
-import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { IconButton } from "react-native-paper";
 import { ModalActions } from "@/components/ModalActions";
 import { View, Text, Button } from "@/components/ui";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface SettingsProps {
@@ -29,7 +29,7 @@ export const Settings = ({
           className="flex-row items-center z-10"
           labelClass="flex items-center justify-center w-10"
         >
-          <AntDesign name="setting" size={20} />
+          <IconSymbol name="gearshape.fill" size={20} color="white" />
         </Button>
       }
     >
@@ -41,9 +41,7 @@ export const Settings = ({
             containerColor={primaryColor}
             mode="contained"
             onPress={() => setFontSize(Math.max(fontSize - 2, 8))}
-            icon={() => (
-              <AntDesign name="minus" size={24} className="!text-white" />
-            )}
+            icon={() => <IconSymbol name="minus" size={24} color="white" />}
           />
 
           <IconButton
@@ -58,9 +56,7 @@ export const Settings = ({
             containerColor={primaryColor}
             disabled={fontSize >= 28}
             onPress={() => setFontSize(Math.min(fontSize + 2, 28))}
-            icon={() => (
-              <AntDesign name="plus" size={24} className="!text-white" />
-            )}
+            icon={() => <IconSymbol name="plus" size={24} color="white" />}
           />
         </View>
 
@@ -72,9 +68,7 @@ export const Settings = ({
             containerColor={primaryColor}
             mode="contained"
             onPress={() => onTranspositionChange(-1)}
-            icon={() => (
-              <AntDesign name="minus" size={24} className="!text-white" />
-            )}
+            icon={() => <IconSymbol name="minus" size={24} color="white" />}
           />
           <IconButton
             mode="contained"
@@ -92,9 +86,7 @@ export const Settings = ({
             containerColor={primaryColor}
             disabled={transposition === 9}
             onPress={() => onTranspositionChange(1)}
-            icon={() => (
-              <AntDesign name="plus" size={24} className="!text-white" />
-            )}
+            icon={() => <IconSymbol name="plus" size={24} color="white" />}
           />
         </View>
       </>

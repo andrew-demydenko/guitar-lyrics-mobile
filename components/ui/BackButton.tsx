@@ -1,6 +1,6 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { TouchableOpacity, Platform } from "react-native";
+import { IconSymbol } from "./IconSymbol";
 
 interface BackButtonProps {
   onPress?: () => void;
@@ -38,7 +38,7 @@ export function BackButton({
       className={`${marginClassName} ${className}`.trim()}
       onPress={handlePress}
     >
-      <Ionicons name="chevron-back-outline" size={size} />
+      <IconSymbol name="chevron.backward" size={size} color="black" />
     </TouchableOpacity>
   );
 }

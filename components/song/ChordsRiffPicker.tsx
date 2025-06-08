@@ -1,8 +1,7 @@
-import { Ionicons } from "@expo/vector-icons";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import React, { useEffect, useState } from "react";
 import { Modal, ScrollView, TouchableOpacity } from "react-native";
 import { View, Text, Button } from "@/components/ui";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import { ChordButton } from "./ChordButton";
 import { ChordsButtons } from "./ChordsButtons";
 
@@ -60,7 +59,7 @@ export const ChordRiffPicker = ({
                 onPress={() => setIsModalOpen(false)}
                 className="p-2"
               >
-                <Ionicons name="close" size={28} color="#000" />
+                <IconSymbol name="xmark" size={28} color="white" />
               </TouchableOpacity>
             </View>
 
@@ -79,7 +78,7 @@ export const ChordRiffPicker = ({
                     buttonColor="danger"
                     size="sm"
                   >
-                    <FontAwesome5 name="backspace" size={14} color="white" />
+                    <IconSymbol name="backspace" size={14} color="white" />
                     <Text className="text-white ml-1">Remove</Text>
                   </Button>
                 )}
