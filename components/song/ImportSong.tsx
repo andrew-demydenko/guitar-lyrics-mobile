@@ -99,8 +99,8 @@ export const ImportSong: React.FC<ImportSongProps> = ({ onImport }) => {
   };
 
   return (
-    <View className="my-4">
-      <Button className="w-full" onPress={() => setIsModalOpen(true)}>
+    <View className="mb-4">
+      <Button className="btn-" onPress={() => setIsModalOpen(true)}>
         <Text>Импортировать песню</Text>
       </Button>
 

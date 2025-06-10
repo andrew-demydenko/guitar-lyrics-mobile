@@ -62,7 +62,7 @@ export const useGoogleAuth = (): UseGoogleAuthResult => {
         redirectUri,
         {
           showInRecents: true,
-          preferEphemeralSession: true,
+          preferEphemeralSession: false,
           presentationStyle: WebBrowser.WebBrowserPresentationStyle.FULL_SCREEN,
         }
       );

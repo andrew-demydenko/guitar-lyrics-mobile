@@ -7,7 +7,15 @@ export type TextProps = RNTextProps & {
   type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
   className?: string;
   currentColor?: boolean;
-  color?: "primary" | "secondary" | "danger" | "warning" | "success" | "info";
+  color?:
+    | "primary"
+    | "secondary"
+    | "danger"
+    | "warning"
+    | "success"
+    | "info"
+    | "black"
+    | "white";
 };
 
 export function Text({
@@ -32,6 +40,8 @@ export function Text({
     warning: "text-yellow-500",
     success: "text-green-500",
     info: "text-blue-500",
+    black: "text-black",
+    white: "text-white",
   };
   return (
     <RNText

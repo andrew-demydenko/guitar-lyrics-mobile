@@ -17,7 +17,7 @@ export interface ButtonProps extends RNButtonProps {
   contentClass?: string;
   disabled?: boolean;
   isActive?: boolean;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   href?: Href;
   buttonColor?: "primary" | "secondary" | "danger" | "success" | "info";
 }
@@ -66,6 +66,7 @@ export const Button = forwardRef<View, ButtonProps>(
     );
 
     const sizeClasses = {
+      xs: "my-0 mx-2",
       sm: "my-2 mx-4",
       md: "my-3 mx-5",
       lg: "my-4 mx-6",
@@ -98,7 +99,10 @@ export const Button = forwardRef<View, ButtonProps>(
         disabled={disabled}
         onPress={!isActive ? handlePress : undefined}
         labelClass={cn(sizeClasses[size], labelClass)}
-        className={cn("flex-row items-center justify-center", className)}
+        className={cn(
+          "flex-row items-center justify-center min-w-0",
+          className
+        )}
         {...rest}
       >
         {children}

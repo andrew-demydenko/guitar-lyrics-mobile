@@ -3,7 +3,6 @@ import { IconButton } from "react-native-paper";
 import { ModalActions } from "@/components/ModalActions";
 import { View, Text, Button } from "@/components/ui";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface SettingsProps {
   fontSize: number;
@@ -18,9 +17,6 @@ export const Settings = ({
   transposition,
   onTranspositionChange,
 }: SettingsProps) => {
-  const { getThemeColor } = useThemeColor();
-  const primaryColor = getThemeColor("primary");
-
   return (
     <ModalActions
       button={
@@ -34,25 +30,20 @@ export const Settings = ({
           <Text className="text-base text-text mr-2">Size:</Text>
           <IconButton
             disabled={fontSize <= 8}
-            containerColor={primaryColor}
-            mode="contained"
             onPress={() => setFontSize(Math.max(fontSize - 2, 8))}
-            icon={() => <IconSymbol name="minus" size={24} color="white" />}
+            icon={() => <IconSymbol name="minus" size={24} color="black" />}
           />
 
           <IconButton
             className="mx-2"
-            containerColor={primaryColor}
-            mode="contained"
+            mode="outlined"
             onPress={() => setFontSize(14)}
-            icon={() => <Text className="my-2 text-center !text-white">D</Text>}
+            icon={() => <Text className="my-2 text-center">D</Text>}
           />
           <IconButton
-            mode="contained"
-            containerColor={primaryColor}
             disabled={fontSize >= 28}
             onPress={() => setFontSize(Math.min(fontSize + 2, 28))}
-            icon={() => <IconSymbol name="plus" size={24} color="white" />}
+            icon={() => <IconSymbol name="plus" size={24} color="black" />}
           />
         </View>
 
@@ -61,28 +52,23 @@ export const Settings = ({
 
           <IconButton
             disabled={transposition === -9}
-            containerColor={primaryColor}
-            mode="contained"
             onPress={() => onTranspositionChange(-1)}
-            icon={() => <IconSymbol name="minus" size={24} color="white" />}
+            icon={() => <IconSymbol name="minus" size={24} color="black" />}
           />
           <IconButton
-            mode="contained"
-            containerColor={primaryColor}
             disabled={true}
+            mode="outlined"
             icon={() => (
-              <Text className="my-2 text-center !text-white">
+              <Text color="black" className="my-2 text-center">
                 {transposition}
               </Text>
             )}
           />
 
           <IconButton
-            mode="contained"
-            containerColor={primaryColor}
             disabled={transposition === 9}
             onPress={() => onTranspositionChange(1)}
-            icon={() => <IconSymbol name="plus" size={24} color="white" />}
+            icon={() => <IconSymbol name="plus" size={24} color="black" />}
           />
         </View>
       </>

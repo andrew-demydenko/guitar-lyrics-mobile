@@ -9,7 +9,7 @@ import React, {
   useCallback,
 } from "react";
 import { SubmitHandler, useFormContext, FieldValues } from "react-hook-form";
-import { ScrollView } from "react-native";
+import { ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import Toast from "react-native-toast-message";
 import { View, Text, Input } from "@/components/ui";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -183,55 +183,62 @@ export const SongForm = forwardRef(
     );
 
     return (
-      <ScrollView className="flex-1 p-4">
-        <View>
-          <Input {...INPUTS["name"]} control={control} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={120}
+      >
+        <ScrollView className="flex-1 p-4">
+          <View>
+            <Input {...INPUTS["name"]} control={control} />
 
-          <Input {...INPUTS["author"]} control={control} />
+            <Input {...INPUTS["author"]} control={control} />
 
-          <Checkbox {...INPUTS["shared"]} control={control} />
+            <Checkbox {...INPUTS["shared"]} control={control} />
 
-          {!editData && (
-            <ImportSong
-              onImport={(data) => {
-                if (data.chords) {
-                  setChordPositions(data.chords);
-                }
-                setValue("text", data.text);
-              }}
-            />
-          )}
-
-          <Input
-            {...INPUTS["text"]}
-            control={control}
-            multiline={true}
-            className="h-[200px]"
-          />
-
-          {deferredText?.length ? (
-            <ScrollView
-              alwaysBounceVertical={true}
-              className="max-h-[150px] my-4 mb-4"
-            >
-              <ChordsButtons
-                selectedChord={selectedChord}
-                onSelectChord={setSelectedChord}
+            {!editData && (
+              <ImportSong
+                onImport={(data) => {
+                  if (data.chords) {
+                    setChordPositions(data.chords);
+                  }
+                  setValue("text", data.text);
+                }}
               />
-            </ScrollView>
-          ) : null}
+            )}
 
-          <Text className="font-medium text-base">
-            Нажмите на символ, чтобы добавить выбранный аккорд:
-          </Text>
-          <SongView
-            song={{ text: deferredText || "", chordPositions }}
-            handleAddChord={handleAddChord}
-            handleRemoveChord={handleRemoveChord}
-            handleChordsRiff={handleChordsRiff}
-          />
-        </View>
-      </ScrollView>
+            <Input
+              {...INPUTS["text"]}
+              control={control}
+              multiline={true}
+              className="h-[200px]"
+            />
+
+            {deferredText?.length ? (
+              <ScrollView
+                alwaysBounceVertical={true}
+                className="max-h-[150px] my-4 mb-4"
+              >
+                <ChordsButtons
+                  selectedChord={selectedChord}
+                  onSelectChord={setSelectedChord}
+                />
+              </ScrollView>
+            ) : null}
+
+            <Text className="font-medium text-base">
+              Нажмите на символ, чтобы добавить выбранный аккорд:
+            </Text>
+            <SongView
+              editable={true}
+              song={{ text: deferredText || "", chordPositions }}
+              handleAddChord={handleAddChord}
+              handleRemoveChord={handleRemoveChord}
+              handleChordsRiff={handleChordsRiff}
+            />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 );

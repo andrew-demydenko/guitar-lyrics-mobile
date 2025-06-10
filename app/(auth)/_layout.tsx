@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, Platform } from "react-native";
 export default function AuthLayout() {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "height" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
       <Stack>

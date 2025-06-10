@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
 import { View } from "@/components/ui";
 import { ChordPositions, Song } from "@/entities/song";
 import { transposeLyricsChords } from "@/lib/song";
@@ -46,23 +45,21 @@ export const SongView = ({
 
   return (
     <View className="m-4 relative text-text">
-      <ScrollView>
-        {textByLines.map((line, lineIndex) => {
-          return (
-            <SongLine
-              key={lineIndex}
-              line={line}
-              lineIndex={lineIndex}
-              transposedChords={transposedChords}
-              fontSize={fontSize}
-              editable={editable}
-              handleAddChord={props.handleAddChord}
-              handleRemoveChord={props.handleRemoveChord}
-              handleChordsRiff={props.handleChordsRiff}
-            />
-          );
-        })}
-      </ScrollView>
+      {textByLines.map((line, lineIndex) => {
+        return (
+          <SongLine
+            key={lineIndex}
+            line={line}
+            lineIndex={lineIndex}
+            transposedChords={transposedChords}
+            fontSize={fontSize}
+            editable={editable}
+            handleAddChord={props.handleAddChord}
+            handleRemoveChord={props.handleRemoveChord}
+            handleChordsRiff={props.handleChordsRiff}
+          />
+        );
+      })}
     </View>
   );
 };

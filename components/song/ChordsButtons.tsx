@@ -15,7 +15,7 @@ export const ChordsButtons = memo(
         {CHORDS_BY_POPULARITY.map((chord) => (
           <ChordButton
             key={chord}
-            size="sm"
+            size="md"
             chord={chord}
             isSelected={selectedChord === chord}
             onPress={onSelectChord}

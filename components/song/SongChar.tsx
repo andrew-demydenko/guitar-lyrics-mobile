@@ -36,11 +36,15 @@ const SongCharComponent = ({
       {chord && (
         <View
           style={{ bottom: fontSize + 5 }}
-          className="absolute left-0 w-[75px]"
+          className="absolute left-[-8px] w-[75px]"
         >
           <View className="flex-row items-center">
             {removeChord ? (
-              <ChordButton onLongPress={handleRemoveChord} chord={chord[1]} />
+              <ChordButton
+                size="xs"
+                onLongPress={handleRemoveChord}
+                chord={chord[1]}
+              />
             ) : (
               <Text className="text-red-400" style={{ fontSize }}>
                 {chord[1]}

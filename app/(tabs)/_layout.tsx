@@ -29,7 +29,6 @@ export default function TabLayout() {
             },
             default: {
               borderTopColor: getThemeColor("secondary"),
-              boxShadow: "0 0 10px 2px rgba(0, 0, 0, 0.3)",
             },
           }),
           headerRight: () => {

@@ -1,4 +1,3 @@
-import cn from "classnames";
 import { useCallback } from "react";
 import { Text } from "react-native";
 import { Button } from "../ui/Button";
@@ -8,7 +7,7 @@ interface IChordButton {
   onLongPress?: (...args: any[]) => void;
   chord: string;
   isSelected?: boolean;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
 }
 
 export const ChordButton = ({
@@ -33,9 +32,6 @@ export const ChordButton = ({
       onPress={handlePress}
       isActive={isSelected}
       size={size}
-      className={cn("ml-1 px-0 min-w-0", {
-        "py-0": !size,
-      })}
     >
       <Text className="text-base/4.5">{chord}</Text>
     </Button>
