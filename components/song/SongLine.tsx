@@ -93,7 +93,7 @@ export const SongLine = memo(
     return (
       <View key={lineIndex} className="relative mb-2">
         <View style={{ marginTop: fontSize + 4 }}>
-          <View className="flex-row flex-wrap">
+          <View className="flex-row flex-wrap gap-y-2">
             {line.split("").map((char, charIndex) => {
               const chord = transposedChords.find(
                 (c) => c[0] === charIndex && c[2] === line

@@ -21,15 +21,13 @@ export const LineOutChord = ({
   return (
     <View className="flex-row items-center mr-2">
       {removeChord ? (
-        <Button
-          mode="outlined"
-          onLongPress={handleRemoveChord}
-          className="ml-1 py-0 px-1"
-        >
-          <Text className="text-base/4.5">{chord[1]}</Text>
+        <Button mode="outlined" size="xs" onLongPress={handleRemoveChord}>
+          <Text style={{ fontSize }}>{chord[1]}</Text>
         </Button>
       ) : (
-        <Text className={`text-red-500 text-[${fontSize}px]`}>{chord[1]}</Text>
+        <Text style={{ fontSize }} className="text-red-500">
+          {chord[1]}
+        </Text>
       )}
     </View>
   );

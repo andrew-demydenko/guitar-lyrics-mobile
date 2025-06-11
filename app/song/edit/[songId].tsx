@@ -52,7 +52,7 @@ export default function ModalScreen() {
           ),
         }}
       />
-      <View className="flex-1 p-4 shadow-md">
+      <View className="flex-1">
         <FormProvider {...methods}>
           <SongForm editData={song} ref={formRef} />
         </FormProvider>

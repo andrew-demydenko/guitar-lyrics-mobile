@@ -13,7 +13,7 @@ import { ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import Toast from "react-native-toast-message";
 import { View, Text, Input } from "@/components/ui";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { CHORDS } from "@/constants/Chords";
+import { CHORDS, CHORDS_BY_POPULARITY } from "@/constants/Chords";
 import { TInputFields } from "@/entities/form";
 import { Song, ChordPositions } from "@/entities/song";
 import request from "@/lib/axios";
@@ -74,11 +74,14 @@ export const SongForm = forwardRef(
     const { control, handleSubmit, watch, setValue, reset } = useFormContext();
     const { user } = useAuthProvider();
     const router = useRouter();
-    const [selectedChord, setSelectedChord] = useState<string>(CHORDS[0]);
+    const [selectedChord, setSelectedChord] = useState<string>(
+      CHORDS_BY_POPULARITY[0]
+    );
     const [chordPositions, setChordPositions] = useState<ChordPositions>([]);
     const watchedText = watch("text");
     const deferredText = useDebounce(watchedText, 500);
     const textRef = useRef(deferredText);
+    const selectedChordRef = useRef(selectedChord);
     const queryClient = useQueryClient();
 
     const { mutate } = useMutation({
@@ -124,6 +127,10 @@ export const SongForm = forwardRef(
       textRef.current = deferredText;
     }, [deferredText]);
 
+    useEffect(() => {
+      selectedChordRef.current = selectedChord;
+    }, [selectedChord]);
+
     useImperativeHandle(ref, () => ({
       handleSubmit: () => {
         handleSubmit(onSubmit)();
@@ -141,6 +148,7 @@ export const SongForm = forwardRef(
 
     const handleAddChord = useCallback(
       (line: string, charIndex: number) => {
+        const selectedChord = selectedChordRef.current;
         if (!selectedChord) return;
 
         if (isServiceLine(line)) {
@@ -156,7 +164,7 @@ export const SongForm = forwardRef(
           [charIndex, selectedChord, line],
         ]);
       },
-      [chordPositions, selectedChord]
+      [chordPositions]
     );
 
     const handleRemoveChord = useCallback(

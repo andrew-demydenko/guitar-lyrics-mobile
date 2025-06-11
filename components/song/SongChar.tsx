@@ -36,7 +36,7 @@ const SongCharComponent = ({
       {chord && (
         <View
           style={{ bottom: fontSize + 5 }}
-          className="absolute left-[-8px] w-[75px]"
+          className="absolute left-[-6px] w-[75px]"
         >
           <View className="flex-row items-center">
             {removeChord ? (
