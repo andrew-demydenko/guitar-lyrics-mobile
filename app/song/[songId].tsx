@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useNavigation, router } from "expo-router";
+import { useLocalSearchParams, useNavigation, Link } from "expo-router";
 import React, { useEffect } from "react";
 import { Platform, ActivityIndicator } from "react-native";
 import { IconButton } from "react-native-paper";
@@ -26,11 +26,12 @@ export default function SongsPage() {
             default: "mr-3",
           })}
         >
-          <IconButton
-            onPress={() => router.push(`/song/edit/${songId}`)}
-            size={24}
-            icon={() => <IconSymbol name="pencil" size={24} color="black" />}
-          />
+          <Link href={`/song/edit/${songId}`} asChild>
+            <IconButton
+              size={24}
+              icon={() => <IconSymbol name="pencil" size={24} color="black" />}
+            />
+          </Link>
         </View>
       ),
     });

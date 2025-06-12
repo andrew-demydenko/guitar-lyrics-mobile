@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { Link } from "expo-router";
 import { cssInterop } from "nativewind";
 import React from "react";
 import { Card } from "react-native-paper";
@@ -15,23 +15,22 @@ const StyledCard = cssInterop(Card, {
 
 export const SongItem = ({ song }: SongItemProps) => {
   return (
-    <StyledCard
-      className="mb-4 !bg-card"
-      onPressIn={() => router.push(`/song/${song.id}`)}
-    >
-      <Card.Title
-        title={song.name}
-        subtitle={song.author}
-        subtitleStyle={style("text-gray-500 dark:text-white")}
-        right={() => (
-          <IconSymbol
-            style={style("mr-2")}
-            name="chevron.right"
-            size={20}
-            color="#9CA3AF"
-          />
-        )}
-      />
-    </StyledCard>
+    <Link href={`/song/${song.id}`} asChild>
+      <StyledCard className="mb-4 !bg-card">
+        <Card.Title
+          title={song.name}
+          subtitle={song.author}
+          subtitleStyle={style("text-gray-500 dark:text-white")}
+          right={() => (
+            <IconSymbol
+              style={style("mr-2")}
+              name="chevron.right"
+              size={20}
+              color="secondary"
+            />
+          )}
+        />
+      </StyledCard>
+    </Link>
   );
 };

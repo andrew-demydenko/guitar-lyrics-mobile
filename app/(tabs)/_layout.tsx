@@ -1,6 +1,5 @@
-import { Entypo } from "@expo/vector-icons";
 import cn from "classnames";
-import { Tabs, router } from "expo-router";
+import { Tabs, Link } from "expo-router";
 import React from "react";
 import { View, Platform } from "react-native";
 import { FAB, IconButton } from "react-native-paper";
@@ -39,19 +38,22 @@ export default function TabLayout() {
                   default: "mr-2",
                 })}
               >
-                <IconButton
-                  className="bg-gray-300 p-1"
-                  mode="contained"
-                  icon={() => (
-                    <Entypo
-                      name="user"
-                      className="text-white dark:text-black"
-                      size={26}
-                    />
-                  )}
-                  onPress={() => router.push("/profile")}
-                  size={20}
-                />
+                <Link asChild href="/profile">
+                  <IconButton
+                    className="bg-gray-300 justify-center items-center"
+                    mode="contained"
+                    icon={() => (
+                      <IconSymbol
+                        style={{ padding: 4 }}
+                        size={36}
+                        color="white"
+                        invertColor
+                        name="person.fill"
+                      />
+                    )}
+                    size={26}
+                  />
+                </Link>
               </View>
             );
           },
@@ -99,23 +101,24 @@ export default function TabLayout() {
         />
       </Tabs>
 
-      <FAB
-        icon={() => <IconSymbol name="plus" size={34} color="white" />}
-        className={cn(
-          "absolute",
-          "shadow-lg",
-          Platform.select({
-            ios: "bottom-14",
-            android: "bottom-12",
-            default: "bottom-16",
-          }),
-          "right-3",
-          "bg-red-400",
-          "!rounded-full"
-        )}
-        onPress={() => router.push("/song/create")}
-        size="large"
-      />
+      <Link href="/song/create" asChild>
+        <FAB
+          icon={() => <IconSymbol name="plus" size={34} color="white" />}
+          className={cn(
+            "absolute",
+            "shadow-lg",
+            Platform.select({
+              ios: "bottom-14",
+              android: "bottom-12",
+              default: "bottom-16",
+            }),
+            "right-3",
+            "bg-red-400",
+            "!rounded-full"
+          )}
+          size="large"
+        />
+      </Link>
     </View>
   );
 }

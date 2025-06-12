@@ -23,7 +23,8 @@ type IconMapping = Record<
   | "pause"
   | "play.fill"
   | "chevron.backward"
-  | "pencil",
+  | "pencil"
+  | "person.fill",
   MaterialIconName
 >;
 type IconSymbolName = keyof IconMapping;
@@ -50,6 +51,7 @@ const MAPPING = {
   "play.fill": "play-arrow",
   "chevron.backward": "arrow-back",
   pencil: "edit",
+  "person.fill": "person",
 } as IconMapping;
 
 /**

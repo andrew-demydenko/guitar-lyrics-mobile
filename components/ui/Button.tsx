@@ -100,7 +100,7 @@ export const Button = forwardRef<View, ButtonProps>(
         onPress={!isActive ? handlePress : undefined}
         labelClass={cn(sizeClasses[size], labelClass)}
         className={cn(
-          "flex-row items-center justify-center min-w-0",
+          "flex-column items-stretch justify-center min-w-0",
           className
         )}
         {...rest}

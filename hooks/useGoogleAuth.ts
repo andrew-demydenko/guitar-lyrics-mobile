@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as AuthSession from "expo-auth-session";
-import { useRouter, useGlobalSearchParams } from "expo-router";
+import { useRouter, useGlobalSearchParams, Href } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
@@ -32,7 +32,7 @@ export const useGoogleAuth = (): UseGoogleAuthResult => {
           const savedReturnTo = await AsyncStorage.getItem(RETURN_TO_ROUTE_KEY);
           await AsyncStorage.removeItem(RETURN_TO_ROUTE_KEY);
 
-          router.push((savedReturnTo as any) || "/(tabs)");
+          router.push((savedReturnTo as Href) || "/(tabs)");
         } catch (_error) {
           Toast.show({
             text1: "Ошибка при обработке авторизации",
@@ -77,7 +77,7 @@ export const useGoogleAuth = (): UseGoogleAuthResult => {
         const tokenFromUrl = params.get("token");
         if (tokenFromUrl) {
           await setAccessToken(tokenFromUrl);
-          router.push("/(tabs)" as any);
+          router.push("/(tabs)");
         }
       }
     } catch (error) {
